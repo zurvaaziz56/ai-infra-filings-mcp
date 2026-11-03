@@ -1,0 +1,20 @@
+# Local Postgres for the warehouse. The passwords below are for local development only.
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: filings
+      POSTGRES_USER: filings_owner
+      POSTGRES_PASSWORD: filings_owner_dev
+    ports:
+      - "55433:5432"
+    volumes:
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "filings_owner", "-d", "filings"]
+      interval: 2s
+      retries: 15
+
+volumes:
+  pgdata:

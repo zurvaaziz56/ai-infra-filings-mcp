@@ -1,0 +1,24 @@
+{
+  "roles": {
+    "viewer": {
+      "description": "Reads normalized metrics. No live full-text search.",
+      "tools": ["get_company", "get_metric", "compare_metric", "source_status"],
+      "sec_requests_per_minute": 10
+    },
+    "analyst": {
+      "description": "Everything a viewer has, plus live full-text search of filings.",
+      "tools": ["get_company", "get_metric", "compare_metric", "search_filings", "source_status"],
+      "sec_requests_per_minute": 60
+    },
+    "data_engineer": {
+      "description": "Everything an analyst has, plus raw SEC facts and the data issues found during loading.",
+      "tools": ["get_company", "get_metric", "compare_metric", "search_filings", "source_status", "get_raw_facts", "list_data_issues"],
+      "sec_requests_per_minute": 120
+    },
+    "admin": {
+      "description": "Every tool.",
+      "tools": ["*"],
+      "sec_requests_per_minute": 240
+    }
+  }
+}

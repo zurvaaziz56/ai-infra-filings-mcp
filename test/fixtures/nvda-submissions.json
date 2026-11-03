@@ -1,0 +1,33 @@
+{
+  "cik": "0001045810",
+  "name": "NVIDIA CORP",
+  "tickers": [
+    "NVDA"
+  ],
+  "sicDescription": "Semiconductors & Related Devices",
+  "fiscalYearEnd": "0131",
+  "filings": {
+    "recent": {
+      "accessionNumber": [
+        "0001045810-26-000075",
+        "0001045810-26-000052"
+      ],
+      "filingDate": [
+        "2026-08-26",
+        "2026-05-20"
+      ],
+      "reportDate": [
+        "2026-07-26",
+        "2026-04-26"
+      ],
+      "form": [
+        "10-Q",
+        "10-Q"
+      ],
+      "primaryDocument": [
+        "nvda-20260726.htm",
+        "nvda-20260426.htm"
+      ]
+    }
+  }
+}
