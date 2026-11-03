@@ -1,0 +1,33 @@
+{
+  "cik": "0000789019",
+  "name": "MICROSOFT CORP",
+  "tickers": [
+    "MSFT"
+  ],
+  "sicDescription": "Services-Prepackaged Software",
+  "fiscalYearEnd": "0630",
+  "filings": {
+    "recent": {
+      "accessionNumber": [
+        "0001193125-26-436133",
+        "0001193125-26-323660"
+      ],
+      "filingDate": [
+        "2026-10-28",
+        "2026-07-29"
+      ],
+      "reportDate": [
+        "2026-09-30",
+        "2026-06-30"
+      ],
+      "form": [
+        "10-Q",
+        "10-K"
+      ],
+      "primaryDocument": [
+        "msft-20260930.htm",
+        "msft-20260630.htm"
+      ]
+    }
+  }
+}
