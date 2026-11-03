@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { canUse } from './access.js';
 import { type AuditEntry, type AuditLog, hashArgs } from './audit.js';
 import { SourceError } from './errors.js';
-import { secRequestCounter } from './sec-client.js';
+import { requestCounter } from './http.js';
 import { type Tool, type ToolContext, type ToolResult, TOOLS } from './tools.js';
 
 export interface ServerDeps extends ToolContext {
@@ -12,7 +12,7 @@ export interface ServerDeps extends ToolContext {
 // Checks the role again on every call, so a registration mistake cannot expose a tool.
 export async function invokeTool(tool: Tool, args: Record<string, unknown>, deps: ServerDeps): Promise<ToolResult> {
   const started = performance.now();
-  const counter = { count: 0 };
+  const requests: Record<string, number> = {};
   let result: ToolResult;
   let outcome: AuditEntry['outcome'];
 
@@ -21,7 +21,7 @@ export async function invokeTool(tool: Tool, args: Record<string, unknown>, deps
     outcome = 'denied';
   } else {
     try {
-      result = await secRequestCounter.run(counter, () => tool.handler(args, deps));
+      result = await requestCounter.run(requests, () => tool.handler(args, deps));
       outcome = result.sources.some((source) => source.status !== 'ok') ? 'degraded' : 'ok';
     } catch (error) {
       if (!(error instanceof SourceError)) console.error(`[${tool.name}]`, error);
@@ -45,7 +45,8 @@ export async function invokeTool(tool: Tool, args: Record<string, unknown>, deps
       args_sha256: hashArgs(args),
       outcome,
       duration_ms: Math.round(performance.now() - started),
-      sec_requests: counter.count,
+      sec_requests: requests.sec ?? 0,
+      github_requests: requests.github ?? 0,
     });
   } catch (error) {
     console.error('Could not write the audit log:', error);
@@ -60,7 +61,12 @@ export function buildServer(deps: ServerDeps, tools: Tool[] = TOOLS): McpServer 
     if (!canUse(deps.role, tool.name)) continue;
     server.registerTool(
       tool.name,
-      { title: tool.title, description: tool.description, inputSchema: tool.inputSchema, annotations: { readOnlyHint: true, openWorldHint: true } },
+      {
+        title: tool.title,
+        description: tool.description,
+        inputSchema: tool.inputSchema,
+        annotations: tool.annotations ?? { readOnlyHint: true, openWorldHint: true },
+      },
       async (args) => {
         const result = await invokeTool(tool, args, deps);
         return { content: [{ type: 'text', text: JSON.stringify(result) }], isError: result.error !== undefined };
