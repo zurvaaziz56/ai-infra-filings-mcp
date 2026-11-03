@@ -1,0 +1,33 @@
+{
+  "cik": "0001769628",
+  "name": "CoreWeave, Inc.",
+  "tickers": [
+    "CRWV"
+  ],
+  "sicDescription": "Services-Prepackaged Software",
+  "fiscalYearEnd": "1231",
+  "filings": {
+    "recent": {
+      "accessionNumber": [
+        "0001769628-26-000366",
+        "0001769628-26-000222"
+      ],
+      "filingDate": [
+        "2026-08-12",
+        "2026-05-08"
+      ],
+      "reportDate": [
+        "2026-06-30",
+        "2026-03-31"
+      ],
+      "form": [
+        "10-Q",
+        "10-Q"
+      ],
+      "primaryDocument": [
+        "crwv-20260630.htm",
+        "crwv-20260331.htm"
+      ]
+    }
+  }
+}
