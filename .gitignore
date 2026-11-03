@@ -3,4 +3,5 @@ dist/
 data/
 logs/
 coverage/
+evals/runs/
 .env

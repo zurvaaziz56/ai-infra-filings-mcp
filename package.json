@@ -14,7 +14,8 @@
     "load": "tsx src/load-cli.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "eval": "npm run build && tsx evals/run.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.11",

@@ -193,7 +193,10 @@ const compareMetric = defineTool({
   title: 'Compare metric',
   description:
     'Compare one metric across companies for the same calendar quarters (CY2025Q2) or years (CY2025). ' +
-    'Fiscal periods are mapped to calendar periods, so companies with different fiscal years line up.',
+    'Fiscal quarters are mapped to the calendar quarter they mostly cover, so companies with different fiscal ' +
+    'years line up. A year (CY2025) is each company\'s fiscal year that mostly falls in 2025, so the 12 months ' +
+    'differ by company: check period_start and period_end. For a January to December total, add up the four ' +
+    'calendar quarters instead.',
   inputSchema: {
     companies: z.array(companyArg).min(1).max(15),
     metric: z.enum(METRIC_IDS),
@@ -202,7 +205,8 @@ const compareMetric = defineTool({
   handler: async (args, ctx) => {
     const companies = await Promise.all(args.companies.map((query) => findCompany(ctx.db, query)));
     const rows = await ctx.db.query<MetricValue & { cik: string }>(
-      `SELECT cik, period_type, fiscal_year, fiscal_period, calendar_period, value, derived, revision, warnings, sources
+      `SELECT cik, period_type, fiscal_year, fiscal_period, calendar_period, period_start, period_end, value, derived,
+         revision, warnings, sources
        FROM metric_values WHERE cik = ANY($1::text[]) AND metric = $2 AND calendar_period = ANY($3::text[])`,
       [companies.map((company) => company.cik), args.metric, args.calendar_periods],
     );
@@ -218,6 +222,8 @@ const compareMetric = defineTool({
               ? {
                   value: row.value,
                   fiscal_period: `FY${row.fiscal_year} ${row.fiscal_period}`,
+                  period_start: row.period_start,
+                  period_end: row.period_end,
                   derived: row.derived,
                   revision: row.revision,
                   warnings: row.warnings,
@@ -262,6 +268,7 @@ const searchFilings = defineTool({
           form: hit._source.form,
           filed: hit._source.file_date,
           period_ending: hit._source.period_ending ?? null,
+          accession: hit._source.adsh,
           link: filingLink(hit._source.ciks[0] ?? '0', hit._source.adsh, hit._id.split(':')[1] ?? ''),
         })),
       },
@@ -386,10 +393,14 @@ const fileDataIssue = defineTool({
   description:
     'Turn a data issue into a GitHub issue with its evidence: the filings involved, the facts as filed, and what ' +
     'the server publishes. Without confirm it only shows the draft. With confirm it files the issue once; ' +
-    'calling it again returns the existing issue.',
+    'calling it again returns the existing issue. Filing writes to GitHub: show the draft to the user, and set ' +
+    'confirm only after they approve it in a later message. Never draft and confirm in the same turn.',
   inputSchema: {
     issue_key: z.string().min(5).max(200).describe('A key from list_data_issues.'),
-    confirm: z.boolean().default(false).describe('File the issue on GitHub. Leave false to see the draft first.'),
+    confirm: z
+      .boolean()
+      .default(false)
+      .describe('File the issue on GitHub. Only after the user has seen the draft and said to file it.'),
   },
   annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
   handler: async (args, ctx) => {
