@@ -15,6 +15,14 @@ describe('SEC client', () => {
     expect(clock.now()).toBeGreaterThanOrEqual(1000);
   });
 
+  it('sends both ends of a search date range, which EDGAR needs to apply it', async () => {
+    const fetch = vi.fn(async () => json({ hits: { total: { value: 0 }, hits: [] } }));
+    await new SecClient({ userAgent: TEST_USER_AGENT, fetch, clock: fakeClock() }).searchFilings({ query: 'Anthropic', from: '2025-01-01' });
+    const url = new globalThis.URL(String((fetch.mock.calls[0] as unknown[])[0]));
+    expect(url.searchParams.get('startdt')).toBe('2025-01-01');
+    expect(url.searchParams.get('enddt')).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
   it('refuses to send a request without a contact email', async () => {
     const fetch = vi.fn(async () => json({}));
     for (const userAgent of [undefined, 'my-bot/1.0']) {

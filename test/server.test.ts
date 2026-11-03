@@ -7,7 +7,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { loadRole } from '../src/access.js';
 import { AuditLog } from '../src/audit.js';
 import { PROJECT_ROOT } from '../src/config.js';
-import type { Db } from '../src/db.js';
+import { type Db, deferredDb } from '../src/db.js';
 import { GitHubClient } from '../src/github-client.js';
 import { loadCompanies } from '../src/load.js';
 import { SecClient } from '../src/sec-client.js';
@@ -62,6 +62,14 @@ describe('access control', () => {
     expect(await names('data_engineer')).toEqual(expect.arrayContaining(['search_filings', 'get_raw_facts', 'list_data_issues', 'file_data_issue']));
   });
 
+  it('lists its tools before the database has opened', async () => {
+    const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+    await buildServer({ ...depsFor('viewer'), db: deferredDb(new Promise(() => {})) }).connect(serverTransport);
+    const client = new Client({ name: 'test', version: '0.0.0' });
+    await client.connect(clientTransport);
+    expect((await client.listTools()).tools).toHaveLength(4);
+  });
+
   it('refuses a tool outside the role, even when called directly', async () => {
     const { call } = await connect('viewer');
     expect(await call('search_filings', { query: 'Anthropic' })).toMatchObject({ isError: true, text: expect.stringContaining('not found') });
@@ -91,7 +99,7 @@ describe('answers', () => {
     const { body } = await call('compare_metric', { companies: ['NVDA', 'MSFT'], metric: 'capex', calendar_periods: ['CY2021Q4', 'CY2025Q2'] });
     const [q4, q2] = body.data.periods;
     expect(q4.values.NVDA).toMatchObject({ value: 273_000_000, fiscal_period: 'FY2022 Q4', derived: true });
-    expect(q2.values.MSFT).toMatchObject({ value: 17_079_000_000, fiscal_period: 'FY2025 Q4' });
+    expect(q2.values.MSFT).toMatchObject({ value: 17_079_000_000, fiscal_period: 'FY2025 Q4', period_start: '2025-04-01', period_end: '2025-06-30' });
     expect(q2.values.NVDA).toBeNull();
     expect(q2.values.MSFT.sources[0].accn).toMatch(/^\d{10}-\d{2}-\d{6}$/);
   });
@@ -100,6 +108,7 @@ describe('answers', () => {
     const { call } = await connect('analyst');
     const { body } = await call('search_filings', { query: 'Anthropic', forms: ['10-K', '10-Q'] });
     expect(body.data.total).toBe(109);
+    expect(body.data.results[0].accession).toMatch(/^\d{10}-\d{2}-\d{6}$/);
     expect(body.data.results[0].link).toMatch(/^https:\/\/www\.sec\.gov\/Archives\/edgar\/data\/1018724\/\d{18}\/amzn-\d{8}\.htm$/);
   });
 });

@@ -1,0 +1,1729 @@
+[
+  {
+    "id": "oracle-capex-cy2026q2",
+    "category": "lookup",
+    "role": "analyst",
+    "question": "How much did Oracle spend on capital expenditures in calendar Q2 2026?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: ORCL capex FY2026 Q4",
+        "pass": true,
+        "detail": "Found \"$16.49 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001193125-26-277521, 0001193125-26-101045."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Oracle spent about **$16.49 billion** on capital expenditures (purchases of property and equipment) in calendar Q2 2026.\n\n- **Period:** Oracle's fiscal Q4 FY2026, which ran from March 1 to May 31, 2026. The tool maps this fiscal quarter to calendar Q2 2026. Oracle's fiscal quarter doesn't line up exactly with the calendar quarter (April–June).\n- **How it was calculated:** Oracle doesn't report this quarter on its own. I derived it by subtracting the nine-month total from the full-year total:\n  - Full fiscal year 2026 (June 1, 2025 – May 31, 2026): $55.663 billion, from the 10-K filed 2026-06-22 (accession 0001193125-26-277521).\n  - Nine months to February 28, 2026: $39.170 billion, from the 10-Q filed 2026-03-11 (accession 0001193125-26-101045).\n  - Difference: $16.493 billion.\n\nThe data shows no restatements or warnings for this figure.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Oracle",
+          "metric": "capex",
+          "from": "2026-01-01"
+        }
+      },
+      {
+        "name": "compare_metric",
+        "input": {
+          "companies": [
+            "Oracle"
+          ],
+          "metric": "capex",
+          "calendar_periods": [
+            "CY2026Q2"
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 7640,
+      "cost_usd": 0.011810399999999999
+    }
+  },
+  {
+    "id": "nvidia-capex-fy2025",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was NVIDIA's capex for its fiscal year 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: NVDA capex FY2025",
+        "pass": true,
+        "detail": "Found \"$3.236 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001045810-26-000021."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "NVIDIA's capex for fiscal year 2025 was **$3.236 billion**. That is its purchases of property and equipment, tagged in the filings as \"PaymentsToAcquireProductiveAssets\".\n\n- **Period:** fiscal year 2025, which ran from January 29, 2024 to January 26, 2025.\n- **Source:** the figure comes from the 10-K filed 2026-02-25, accession number 0001045810-26-000021.\n\nThat accession number is from the 10-K for the fiscal year ending January 2026 (FY2026). It also reports the FY2025 comparative figure, and the warehouse listed it as the source. I didn't see the original FY2025 10-K in the results, so I can't say whether the number was restated. The warehouse marks the value as having no revision.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "NVDA",
+          "metric": "capex",
+          "period_type": "year"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 5922,
+      "cost_usd": 0.0071157
+    }
+  },
+  {
+    "id": "microsoft-capex-fy2025-q4",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What did Microsoft spend on capex in the fourth quarter of its fiscal 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: MSFT capex FY2025 Q4",
+        "pass": true,
+        "detail": "Found \"$17.08 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001193125-26-323660, 0001193125-26-191507."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Microsoft's capex in fiscal Q4 2025 (April 1 to June 30, 2025) was **about $17.08 billion**. Capex here is purchases of property and equipment.\n\nThe filings don't report this quarter directly, so the tool derived it by subtracting nine-month capex from full-year capex:\n- **Full fiscal 2025** (July 1, 2024 to June 30, 2025): $64.551 billion, from the 10-K, accession 0001193125-26-323660.\n- **First nine months of fiscal 2025** (July 1, 2024 to March 31, 2025): $47.472 billion, from the 10-Q, accession 0001193125-26-191507.\n- **Fiscal Q4 2025:** $64.551 billion − $47.472 billion = $17.079 billion.\n\nThe warehouse shows filing dates of 2026-07-29 for the 10-K and 2026-04-29 for the 10-Q. That is later than I'd expect for filings covering periods ending in 2025. I haven't verified why, so check the accession numbers against the SEC filings if the exact source matters. The warehouse shows no restatement of this figure.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "MSFT",
+          "metric": "capex",
+          "period_type": "quarter",
+          "from": "2025-04-01",
+          "to": "2025-07-31"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 10187,
+      "cost_usd": 0.0165552
+    }
+  },
+  {
+    "id": "meta-capex-latest",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What is Meta's most recent quarterly capex in your data, and which quarter is it?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: META capex CY2026Q3",
+        "pass": true,
+        "detail": "Found \"$33.94 billion\"."
+      },
+      {
+        "name": "mentions: Q3 | third quarter",
+        "pass": true,
+        "detail": "Mentions \"Q3\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001628280-26-066773, 0001628280-26-050705."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Yes, the data has a most recent quarter for Meta. It is Q3 fiscal 2026 (July 1 – September 30, 2026), and capex for that quarter was about $33.94 billion.\n\nCapex here means purchases of property and equipment. Meta doesn't report this quarter as a single figure, so I derived it by subtraction from year-to-date totals:\n\n- **Nine months ended Sept 30, 2026:** $83.055 billion, from the 10-Q filed 2026-10-22 (accession 0001628280-26-066773).\n- **Six months ended June 30, 2026:** $49.113 billion, from the 10-Q filed 2026-07-30 (accession 0001628280-26-050705).\n- **Q3 2026:** $83.055 billion − $49.113 billion = $33.942 billion.\n\nThe warehouse shows no revisions or warnings on this figure.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "META",
+          "metric": "capex",
+          "period_type": "quarter",
+          "limit": 4
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 7628,
+      "cost_usd": 0.009875700000000001
+    }
+  },
+  {
+    "id": "alphabet-rd-2025",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "How much did Alphabet spend on research and development in 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: GOOGL R&D FY2025",
+        "pass": true,
+        "detail": "Found \"$61.087 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001652044-26-000018."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Alphabet spent **$61.087 billion** on research and development in fiscal year 2025, which covers January 1 to December 31, 2025. The figure comes from its 10-K filed 2026-02-05 (accession number 0001652044-26-000018).\n\nFor comparison, the 10-K reports $49.326 billion for 2024 (the same accession number). That makes 2025 about $11.8 billion higher.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Alphabet",
+          "metric": "rd_expense",
+          "period_type": "year",
+          "from": "2024-12-01"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 5108,
+      "cost_usd": 0.0093786
+    }
+  },
+  {
+    "id": "microsoft-capex-fy2027-q1-months",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was Microsoft's capex in fiscal Q1 2027, and which calendar months does that quarter cover?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: MSFT capex FY2027 Q1",
+        "pass": true,
+        "detail": "Found \"$39.367 billion\"."
+      },
+      {
+        "name": "mentions: July | Jul",
+        "pass": true,
+        "detail": "Mentions \"July\"."
+      },
+      {
+        "name": "mentions: September | Sep",
+        "pass": true,
+        "detail": "Mentions \"September\"."
+      },
+      {
+        "name": "mentions: 2026",
+        "pass": true,
+        "detail": "Mentions \"2026\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001193125-26-436133."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Microsoft's capex (purchases of property and equipment) in fiscal Q1 2027 was **$39.367 billion**.\n\n- **Period covered:** July 1, 2026 to September 30, 2026. The quarter spans July, August and September 2026, which is calendar Q3 2026. Microsoft's fiscal year ends June 30.\n- **Source:** the 10-Q filed 2026-10-28, accession number **0001193125-26-436133**. The figure is reported directly in that filing, not derived from year-to-date totals.\n\nFor comparison, the 10-Q filed 2026-10-28 also reports fiscal Q1 2026 (July 1 to September 30, 2025) capex of $19.394 billion. That makes the fiscal Q1 2027 figure about double the prior-year quarter.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "MSFT",
+          "metric": "capex",
+          "limit": 6
+        }
+      },
+      {
+        "name": "get_company",
+        "input": {
+          "company": "MSFT"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 5944,
+      "cost_usd": 0.0220281
+    }
+  },
+  {
+    "id": "apple-revenue-fy2025-millions",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was Apple's revenue for fiscal 2025, in millions of dollars?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: AAPL revenue FY2025",
+        "pass": true,
+        "detail": "Found \"$416,161 million\"."
+      },
+      {
+        "name": "mentions: 416,161",
+        "pass": true,
+        "detail": "Mentions \"416,161\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0000320193-25-000079."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Apple's revenue for fiscal 2025 (the year from September 29, 2024 to September 27, 2025) was **$416,161 million**, about $416.2 billion. It comes from Apple's 10-K filed 2025-10-31, accession number 0000320193-25-000079.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "AAPL",
+          "metric": "revenue",
+          "period_type": "year",
+          "limit": 5
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 4222,
+      "cost_usd": 0.004831500000000001
+    }
+  },
+  {
+    "id": "coreweave-revenue-q2-2025",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was CoreWeave's revenue in Q2 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: CRWV revenue Q2 2025",
+        "pass": true,
+        "detail": "Found \"$1.212 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001769628-26-000366, 0001769628-25-000041."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "CoreWeave's revenue for Q2 2025 (April 1 – June 30, 2025) was **$1.212 billion**. That figure comes from the 10-Q filed 2026-08-12, accession number 0001769628-26-000366. It is a restated figure, shown as $1,212,000,000.\n\nThe original Q2 2025 10-Q, filed 2025-08-13 (accession 0001769628-25-000041), reported $1,212,788,000, or about $1.213 billion. The two figures differ by less than $1 million.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "CoreWeave",
+          "metric": "revenue",
+          "from": "2025-04-01",
+          "to": "2025-06-30"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 5491,
+      "cost_usd": 0.0059268
+    }
+  },
+  {
+    "id": "big-four-capex-cy2026q2",
+    "category": "comparison",
+    "role": "viewer",
+    "question": "Rank Microsoft, Alphabet, Amazon and Meta by capex in calendar Q2 2026, with the amounts.",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: AMZN",
+        "pass": true,
+        "detail": "Found \"$54.21B\"."
+      },
+      {
+        "name": "amount: GOOGL",
+        "pass": true,
+        "detail": "Found \"$44.92B\"."
+      },
+      {
+        "name": "amount: MSFT",
+        "pass": true,
+        "detail": "Found \"$35.80B\"."
+      },
+      {
+        "name": "amount: META",
+        "pass": true,
+        "detail": "Found \"$30.12B\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001018724-26-000026, 0001652044-26-000071, 0001193125-26-323660, 0001628280-26-050705, 0001652044-26-000048, 0001193125-26-191507, 0001628280-26-028526."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "7 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Amazon had the highest capex in calendar Q2 2026 (April–June 2026), followed by Alphabet, Microsoft and Meta.\n\n| Rank | Company | Q2 2026 capex | Source filing |\n|---|---|---|---|\n| 1 | Amazon | $54.21B | 10-Q, accession 0001018724-26-000026 |\n| 2 | Alphabet | $44.92B | 10-Q, accession 0001652044-26-000071 |\n| 3 | Microsoft | $35.80B | 10-K, accession 0001193125-26-323660 |\n| 4 | Meta | $30.12B | 10-Q, accession 0001628280-26-050705 |\n\n- **Amazon:** The $54.21B is reported directly for April 1 – June 30, 2026. It uses the \"payments to acquire productive assets\" tag, not the \"purchases of property and equipment\" tag the other three use. The definitions may not match exactly, so the comparison with the others is not perfectly like-for-like.\n- **Alphabet:** I derived the figure by subtraction. Six-month capex was $80.598B (accession 0001652044-26-000071) and Q1 was $35.674B (10-Q, accession 0001652044-26-000048).\n- **Microsoft:** I derived the figure by subtraction. This is its fiscal Q4 2026 (April–June 2026). Full-year capex was $115.948B (10-K, accession 0001193125-26-323660). Nine-month capex was $80.146B (10-Q, accession 0001193125-26-191507).\n- **Meta:** I derived the figure by subtraction. Six-month capex was $49.113B (accession 0001628280-26-050705) and Q1 was $18.997B (10-Q, accession 0001628280-26-028526).\n\nNone of the figures shows a restatement.",
+    "tools": [
+      {
+        "name": "compare_metric",
+        "input": {
+          "companies": [
+            "MSFT",
+            "GOOGL",
+            "AMZN",
+            "META"
+          ],
+          "metric": "capex",
+          "calendar_periods": [
+            "CY2026Q2"
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 12044,
+      "cost_usd": 0.0148275
+    }
+  },
+  {
+    "id": "microsoft-oracle-capex-calendar-2025",
+    "category": "comparison",
+    "role": "viewer",
+    "question": "Which spent more on capex in calendar year 2025 (January to December), Microsoft or Oracle, and how much did each spend?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: MSFT capex, CY2025 Q1–Q4",
+        "pass": true,
+        "detail": "Found \"$83.09 billion\"."
+      },
+      {
+        "name": "amount: ORCL capex, CY2025 Q1–Q4",
+        "pass": true,
+        "detail": "Found \"$35.48 billion\"."
+      },
+      {
+        "name": "mentions: Microsoft",
+        "pass": true,
+        "detail": "Mentions \"Microsoft\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001193125-26-191507, 0001193125-26-323660, 0001193125-26-436133, 0001193125-26-027207, 0001193125-26-101045, 0001193125-25-315925, 0001193125-26-277521, 0001193125-26-389274."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "8 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Microsoft spent more on capex in calendar 2025. Oracle's figure for the same January–December window isn't available, but Microsoft is ahead on every alignment I could build.\n\nThe comparison tool labelled the fiscal-year totals as \"CY2025\", but neither covers January–December 2025. Microsoft's fiscal year ends in June and Oracle's ends in May. I rebuilt the figures from quarterly data instead. The metric is purchases of property and equipment.\n\n**Microsoft, calendar 2025: $83.09 billion**\nIts fiscal quarters line up with calendar quarters.\n\n| Period | Capex | Accession no. |\n|---|---|---|\n| Jan–Mar 2025 | $16.745B | 0001193125-26-191507 |\n| Apr–Jun 2025 | $17.079B | 0001193125-26-323660 (10-K) and 0001193125-26-191507 (10-Q) |\n| Jul–Sep 2025 | $19.394B | 0001193125-26-436133 |\n| Oct–Dec 2025 | $29.876B | 0001193125-26-027207 |\n\nThe Apr–Jun 2025 figure is derived as the full fiscal year minus the first nine months.\n\n**Oracle: about $35.48 billion for Dec 2024–Nov 2025 (not exactly calendar 2025)**\nOracle's quarters end in February, May, August and November. They don't split cleanly at December 31, and the tools have no December 2025 monthly figure.\n\n| Period | Capex | Accession no. |\n|---|---|---|\n| Dec 2024–Feb 2025 | $5.862B | 0001193125-26-101045 and 0001193125-25-315925 |\n| Mar–May 2025 | $9.080B | 0001193125-26-277521 (10-K) and 0001193125-26-101045 |\n| Jun–Aug 2025 | $8.502B | 0001193125-26-389274 |\n| Sep–Nov 2025 | $12.033B | 0001193125-25-315925 and 0001193125-26-389274 |\n\nThree of these four quarters are derived by subtracting year-to-date figures.\n\n**Fiscal-year comparison (the tool's default view)**\n- **Microsoft:** $64.551B for the fiscal year ended June 30, 2025 (accession 0001193125-26-323660).\n- **Oracle:** $55.663B for the fiscal year ended May 31, 2026 (accession 0001193125-26-277521).\n\nMicrosoft is also ahead on this basis, but the two years cover different spans (July 2024–June 2025 against June 2025–May 2026).",
+    "tools": [
+      {
+        "name": "compare_metric",
+        "input": {
+          "companies": [
+            "MSFT",
+            "ORCL"
+          ],
+          "metric": "capex",
+          "calendar_periods": [
+            "CY2025"
+          ]
+        }
+      },
+      {
+        "name": "source_status",
+        "input": {}
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "MSFT",
+          "metric": "capex",
+          "from": "2024-12-01",
+          "limit": 12
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "ORCL",
+          "metric": "capex",
+          "from": "2024-12-01",
+          "limit": 12
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 5,
+      "duration_ms": 17217,
+      "cost_usd": 0.05884709999999999
+    }
+  },
+  {
+    "id": "nvidia-amd-rd-cy2026q2",
+    "category": "comparison",
+    "role": "viewer",
+    "question": "Compare NVIDIA's and AMD's R&D spending for calendar Q2 2026.",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: NVDA R&D CY2026Q2",
+        "pass": true,
+        "detail": "Found \"$7.054B\"."
+      },
+      {
+        "name": "amount: AMD R&D CY2026Q2",
+        "pass": true,
+        "detail": "Found \"$2.528B\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001045810-26-000075, 0000002488-26-000123."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "NVIDIA spent about $4.53B more on R&D than AMD in calendar Q2 2026, roughly 2.8 times as much.\n\n| Company | Fiscal period | Period covered | R&D expense | Filing (accession no.) |\n|---|---|---|---|---|\n| NVIDIA | FY2027 Q2 | Apr 27 – Jul 26, 2026 | $7.054B | 0001045810-26-000075 (10-Q, filed 2026-08-26) |\n| AMD | FY2026 Q2 | Mar 29 – Jun 27, 2026 | $2.528B | 0000002488-26-000123 (10-Q, filed 2026-08-05) |\n\nThe two companies' quarters don't line up exactly. The tool mapped each company's fiscal quarter to calendar Q2 2026. NVIDIA's quarter ends about a month later than AMD's.\n\nBoth figures are reported directly in the filings. Neither was derived or revised.",
+    "tools": [
+      {
+        "name": "compare_metric",
+        "input": {
+          "companies": [
+            "NVDA",
+            "AMD"
+          ],
+          "metric": "rd_expense",
+          "calendar_periods": [
+            "CY2026Q2"
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 6000,
+      "cost_usd": 0.008018999999999998
+    }
+  },
+  {
+    "id": "oracle-revenue-cy2020q2",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Oracle's revenue in calendar Q2 2020?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: ORCL revenue FY2020 Q4",
+        "pass": true,
+        "detail": "Found \"$10.44 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001564590-22-023675, 0001564590-21-012539."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Oracle's revenue for the quarter that the tool maps to calendar Q2 2020 was **about $10.44 billion** ($10,439,000,000). That quarter is Oracle's fiscal Q4 2020, which ran from March 1 to May 31, 2020.\n\nThe filings don't report this figure directly. The tool derived it as full-year revenue minus nine-month year-to-date revenue:\n- **Full-year revenue, fiscal 2020 (June 1, 2019 to May 31, 2020):** $39.068 billion. This is from the 10-K filed 2022-06-21, accession 0001564590-22-023675.\n- **Nine-month year-to-date revenue (June 1, 2019 to Feb 29, 2020):** $28.629 billion. This is from the 10-Q filed 2021-03-11, accession 0001564590-21-012539.\n- **Difference:** $39.068 billion − $28.629 billion = $10.439 billion.\n\n- **Period mismatch:** Oracle's fiscal quarter ends May 31, so this covers March through May 2020. It is not the exact April–June calendar quarter. The tool maps it to CY2020Q2 as the closest fit.\n- **Source filings:** Both filings were filed well after the period ended, in 2021 and 2022. I can't tell from the tool output why the figures come from those filings rather than the original 2020 ones. The tool reports no revisions or warnings for this value.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Oracle",
+          "metric": "revenue",
+          "from": "2020-04-01",
+          "to": "2020-09-30"
+        }
+      },
+      {
+        "name": "compare_metric",
+        "input": {
+          "companies": [
+            "ORCL"
+          ],
+          "metric": "revenue",
+          "calendar_periods": [
+            "CY2020Q2"
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 9499,
+      "cost_usd": 0.0153024
+    }
+  },
+  {
+    "id": "nvidia-capex-fy2022",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What did NVIDIA spend on capex in its fiscal 2022?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: NVDA capex FY2022",
+        "pass": true,
+        "detail": "Found \"$0.976 billion\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001045810-24-000029."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "NVIDIA's capex for fiscal 2022 was about $0.976 billion ($976 million).\n\n- **Period:** fiscal 2022, which ran from 2021-02-01 to 2022-01-30.\n- **Source:** accession number 0001045810-24-000029. This is a 10-K filed 2024-02-21, not the original fiscal 2022 10-K. The tools returned the figure from that later filing, and they flag no restatement.\n- **Measure:** the figure uses the XBRL tag `PaymentsToAcquireProductiveAssets`. NVIDIA's capex tag changed from `PaymentsToAcquirePropertyPlantAndEquipment` in late 2019. The new tag may cover more than property and equipment purchases.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "NVDA",
+          "metric": "capex",
+          "period_type": "year",
+          "limit": 20
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 7105,
+      "cost_usd": 0.0105729
+    }
+  },
+  {
+    "id": "super-micro-restated-operating-income",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Super Micro's operating income in its fiscal 2016 Q1, and was that figure ever restated?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: SMCI operating income FY2016 Q1, restated",
+        "pass": true,
+        "detail": "Found \"$0.025205 billion\"."
+      },
+      {
+        "name": "amount: SMCI operating income FY2016 Q1, first reported",
+        "pass": true,
+        "detail": "Found \"$0.02144 billion\"."
+      },
+      {
+        "name": "mentions: restat",
+        "pass": true,
+        "detail": "Mentions \"restat\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001628280-15-008828, 0001375365-19-000033."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Yes. Super Micro's fiscal 2016 Q1 operating income was restated.\n\n- **Period:** fiscal 2016 Q1, which ran from July 1, 2015 to September 30, 2015.\n- **Originally reported:** $0.02144 billion (about $21.4 million). This came from the original filing, accession number 0001628280-15-008828, filed 2015-11-16.\n- **Restated:** $0.025205 billion (about $25.2 million). This came from the 10-Q/A, accession number 0001375365-19-000033, filed 2019-05-17.\n\nThe restatement raised the figure by about $3.8 million, or roughly 17.6%.\n\nThe tool shows only the original and the latest restated value. It doesn't show whether there were any other revisions in between.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Super Micro Computer",
+          "metric": "operating_income",
+          "from": "2015-07-01",
+          "to": "2015-12-31"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 5456,
+      "cost_usd": 0.0072465
+    }
+  },
+  {
+    "id": "dell-rd-fy2021-q4",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Dell's R&D expense in the fourth quarter of its fiscal 2021?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "no amount: the negative FY − 9M YTD result",
+        "pass": true,
+        "detail": "Not stated."
+      },
+      {
+        "name": "no amount: the same figure without its sign",
+        "pass": true,
+        "detail": "Not stated."
+      },
+      {
+        "name": "says the data is not available",
+        "pass": true,
+        "detail": "Says \"can't\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "5 citation(s), all from tool results."
+      }
+    ],
+    "answer": "I can't give you a reliable figure for Dell's R&D expense in Q4 of fiscal 2021 (the quarter ended January 29, 2021). The tools have no value for that quarter, and a live SEC check returned nothing for it either. Dell's 10-K reports only full-year figures, so the quarter would have to be derived, and the data doesn't let me do that cleanly.\n\n- **Full-year FY2021 (Feb 1, 2020 – Jan 29, 2021):** The restated figure is $2.455 billion, from the 10-K filed 2023-03-30 (accession 0001571996-23-000007). The original 10-K (accession 0001571996-21-000007, filed 2021-03-26) reported $5.275 billion. The two differ by more than a factor of two, so the figures are not on a consistent basis.\n- **Q3 FY2021 (quarter ended Oct 30, 2020):** The warehouse shows $1.36 billion, from accession 0001571996-21-000063. That is too large to be a single quarter if the full year is $2.455 billion. It looks like a figure on the older, pre-restatement basis.\n- **Q1 FY2022 (quarter ended Apr 30, 2021):** The restated value is $0.619 billion (accession 0001571996-22-000021). It was originally reported as $1.323 billion (accession 0001571996-21-000026).\n\nThe usual way to get Q4 is to subtract the nine-month year-to-date figure from the full-year figure. The Q1 and Q2 FY2021 values aren't in the warehouse, and the figures I do have mix pre- and post-restatement bases. Any number I calculated would be an estimate, so I haven't given one.\n\nTo get the exact figure, check the FY2021 10-K (accession 0001571996-21-000007) or the Q4 FY2021 earnings release directly.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Dell",
+          "metric": "rd_expense",
+          "from": "2020-10-01",
+          "to": "2021-06-30"
+        }
+      },
+      {
+        "name": "get_company",
+        "input": {
+          "company": "Dell"
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Dell",
+          "metric": "rd_expense",
+          "period_type": "year",
+          "from": "2020-01-01",
+          "to": "2022-03-01"
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Dell",
+          "metric": "rd_expense",
+          "from": "2020-11-01",
+          "to": "2021-03-01",
+          "live": true
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 5,
+      "duration_ms": 13192,
+      "cost_usd": 0.039355799999999996
+    }
+  },
+  {
+    "id": "amazon-rd-2025",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "How much did Amazon spend on R&D in 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "no amounts",
+        "pass": true,
+        "detail": "States no amounts."
+      },
+      {
+        "name": "says the data is not available",
+        "pass": true,
+        "detail": "Says \"can't\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "0 citation(s), all from tool results."
+      }
+    ],
+    "answer": "I can't give you a figure for Amazon's 2025 R&D spending. The filings tools have no R&D data for Amazon (AMZN). I checked annual and quarterly values from the warehouse, then re-checked annual values live against the SEC. Each query came back empty. The tools report that Amazon files nothing under the standard R&D expense tags (`ResearchAndDevelopmentExpense` and `ResearchAndDevelopmentExpenseExcludingAcquiredInProcessCost`).\n\nI haven't estimated a number or used any outside figure. Amazon may report similar spending under a different line item in its financial statements, but the tools can't retrieve that line item. I can't confirm it, and I can't cite an accession number for any R&D figure.\n\nI can pull Amazon's capex, revenue, or operating income for 2025 if you'd like. Those may be useful for your AI-infrastructure work.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "AMZN",
+          "metric": "rd_expense",
+          "period_type": "year"
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "AMZN",
+          "metric": "rd_expense",
+          "period_type": "quarter",
+          "from": "2025-01-01"
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "AMZN",
+          "metric": "rd_expense",
+          "period_type": "year",
+          "live": true
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 4,
+      "duration_ms": 9245,
+      "cost_usd": 0.015164399999999998
+    }
+  },
+  {
+    "id": "microsoft-revenue-fy2016-restated",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Microsoft's total revenue in fiscal 2016?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: MSFT revenue FY2016, restated",
+        "pass": true,
+        "detail": "Found \"$91.154 billion\"."
+      },
+      {
+        "name": "mentions: restat | originally | first reported",
+        "pass": true,
+        "detail": "Mentions \"restat\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001564590-18-019062, 0001193125-16-662209."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "2 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Microsoft's total revenue for fiscal 2016 (July 1, 2015 to June 30, 2016) was **$91.154 billion**. That is the restated figure. It comes from the 10-K filed 2018-08-03, accession number 0001564590-18-019062.\n\nMicrosoft first reported **$85.320 billion** for the same year in its original filing, accession number 0001193125-16-662209, filed 2016-07-28. The tool flags the later number as restated, but it doesn't say why the two figures differ.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "Microsoft",
+          "metric": "revenue",
+          "period_type": "year",
+          "from": "2016-01-01",
+          "to": "2016-12-31"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 6678,
+      "cost_usd": 0.0062121
+    }
+  },
+  {
+    "id": "anthropic-mentions",
+    "category": "search",
+    "role": "analyst",
+    "question": "Which companies have mentioned Anthropic in a 10-K or 10-Q filed since January 2025? Name a few.",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "mentions: Amazon",
+        "pass": true,
+        "detail": "Mentions \"Amazon\"."
+      },
+      {
+        "name": "uses: search_filings",
+        "pass": true,
+        "detail": "Called search_filings."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "9 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Yes. The search found 109 matching 10-K and 10-Q filings since January 2025, and several well-known companies are among them. The search only matches the text \"Anthropic\". It doesn't tell me how each filing uses the name, such as an investment, a customer, a partner or a competitor.\n\nCompanies and example filings:\n\n- **Amazon (AMZN):** 10-K for FY2025, filed 2026-02-06 (accession 0001018724-26-000004). Its 10-Q for the quarter ended 2026-09-30 also mentions Anthropic (0001018724-26-000040).\n- **Meta Platforms (META):** 10-K for FY2025, filed 2026-01-29 (0001628280-26-003942).\n- **NVIDIA (NVDA):** 10-Q for the quarter ended 2025-10-26, filed 2025-11-19 (0001045810-25-000230).\n- **Salesforce (CRM):** 10-Q for the quarter ended 2026-07-31, filed 2026-08-27 (0001108524-26-000190).\n- **IBM:** 10-K for FY2025, filed 2026-02-24 (0000051143-26-000010).\n- **Snowflake (SNOW):** 10-Q for the quarter ended 2026-07-31, filed 2026-09-04 (0001640147-26-000037).\n- **Reddit (RDDT):** 10-K for FY2025, filed 2026-02-06 (0001713445-26-000022). Reddit also mentions it in several 10-Qs.\n- **Zoom (ZM):** 10-K for the year ended 2026-01-31, filed 2026-02-27 (0001585521-26-000030).\n\nOther companies in the results include Figma, MongoDB, DocuSign, Atlassian, Cognizant, Roper Technologies, Hut 8, TeraWulf, News Corp, Chegg and John Wiley & Sons.\n\nThe results page I pulled lists only part of the 109 filings, so this is not a complete list of companies.",
+    "tools": [
+      {
+        "name": "search_filings",
+        "input": {
+          "query": "\"Anthropic\"",
+          "forms": [
+            "10-K",
+            "10-Q"
+          ],
+          "from": "2025-01-01"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 9481,
+      "cost_usd": 0.0957948
+    }
+  },
+  {
+    "id": "coreweave-mentions-openai",
+    "category": "search",
+    "role": "analyst",
+    "question": "Has CoreWeave mentioned OpenAI in its 10-K or 10-Q filings?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "mentions: Yes",
+        "pass": true,
+        "detail": "Mentions \"Yes\"."
+      },
+      {
+        "name": "uses: search_filings",
+        "pass": true,
+        "detail": "Called search_filings."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "6 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Yes. A full-text search for \"OpenAI\" returned hits in CoreWeave's 10-K and 10-Q filings. The search returns only links, not the text around each match. I can't tell you what the filings say about OpenAI, such as contract terms, dollar amounts or customer concentration.\n\n**CoreWeave filings that matched (CIK 0001769628)**\n\n| Form | Period covered | Filed | Accession no. |\n|---|---|---|---|\n| 10-Q | Quarter ended 2025-03-31 | 2025-05-15 | 0001769628-25-000014 |\n| 10-Q | Quarter ended 2025-06-30 | 2025-08-13 | 0001769628-25-000041 |\n| 10-Q | Quarter ended 2025-09-30 | 2025-11-13 | 0001769628-25-000062 |\n| 10-K | Year ended 2025-12-31 | 2026-03-02 | 0001769628-26-000104 |\n| 10-Q | Quarter ended 2026-03-31 | 2026-05-08 | 0001769628-26-000222 |\n| 10-Q | Quarter ended 2026-06-30 | 2026-08-12 | 0001769628-26-000366 |\n\n- **Exhibits:** The search also matched an exhibit to the FY2025 10-K (`ex10311.htm`, same accession number). It matched an exhibit to the Q3 2025 10-Q (`exhibit107.htm`, same accession number) as well.\n- **Coverage:** The matches run from the Q1 2025 10-Q through the Q2 2026 10-Q. The tools show no match for earlier CoreWeave filings.\n- **Matching rule:** The search matches the exact phrase \"OpenAI\" in a filing. I did not read the filings, so I haven't confirmed how each one uses the name.\n\nTo see the wording, open the main documents, for example the [FY2025 10-K](https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm) and the [Q2 2026 10-Q](https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm).",
+    "tools": [
+      {
+        "name": "search_filings",
+        "input": {
+          "query": "CoreWeave \"OpenAI\"",
+          "forms": [
+            "10-K",
+            "10-Q"
+          ]
+        }
+      },
+      {
+        "name": "get_company",
+        "input": {
+          "company": "CoreWeave"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 11959,
+      "cost_usd": 0.0418764
+    }
+  },
+  {
+    "id": "viewer-cannot-search",
+    "category": "access",
+    "role": "viewer",
+    "question": "Search SEC filings for mentions of Anthropic and list the companies.",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "says the data is not available",
+        "pass": true,
+        "detail": "Says \"can't\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "0 citation(s), all from tool results."
+      }
+    ],
+    "answer": "I can't do that search. My tools can't run a text search across SEC filings, so I can't find which companies mention Anthropic. They can only do the following:\n\n- Identify a loaded company and list its latest 10-K and 10-Q filings with links.\n- Pull quarterly or annual capex, revenue, R&D expense, and operating income for a company.\n- Compare one of those metrics across companies.\n- Report the status of the data sources.\n\nI won't guess at a list from memory, because every answer here has to come from the filings tools.\n\nHere are two things I can do instead:\n- If you give me specific companies, I can list their latest 10-K and 10-Q filings with links. You could then check those documents for Anthropic mentions yourself.\n- I can pull capex, R&D, revenue, or operating income for any companies you're tracking, with accession numbers.\n\nWould either of those help?",
+    "tools": [],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 1,
+      "duration_ms": 4251,
+      "cost_usd": 0.0066525
+    }
+  },
+  {
+    "id": "analyst-cannot-see-raw-facts",
+    "category": "access",
+    "role": "analyst",
+    "question": "Show me the raw XBRL facts NVIDIA filed for revenue for the period ending 2017-07-30, before any de-duplication.",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "says the data is not available",
+        "pass": true,
+        "detail": "Says \"can't\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "I can't show you the raw, pre-de-duplication XBRL facts. The tools I have only return values that have already been processed. None of them exposes the underlying fact list. A live rebuild from the SEC returned the same single record.\n\nFor the quarter ended 2017-07-30 (May 1 to July 30, 2017; fiscal 2018 Q2), the processed record shows one source fact:\n\n| Field | Value |\n|---|---|\n| Revenue | $2.23 billion (2,230,000,000 USD) |\n| XBRL tag | RevenueFromContractWithCustomerExcludingAssessedTax |\n| Filing | Form 10-K filed 2019-02-21 |\n| Accession number | 0001045810-19-000023 |\n| Derived from year-to-date totals | No |\n| Revision flag | none |\n| Warnings | none |\n\n- **Possible duplicates:** NVIDIA's original 10-Q for that quarter, filed in 2017, probably reported the same period. If it did, it isn't shown here. I can't tell whether it was dropped as a duplicate or never loaded, so I won't guess at its accession number or value.\n- **Tag history:** NVIDIA used the `Revenues` tag from 2008-01-27 onward. It used `RevenueFromContractWithCustomerExcludingAssessedTax` only from 2017-01-29 through 2020-01-26. Any extra facts for this period would probably be under one of those two tags.\n\nFor the raw facts, you could pull NVIDIA's XBRL company-facts data directly from the SEC (CIK 0001045810). I can also run a full-text search of NVIDIA's 2017 filings to find the original 10-Q's accession number. That search returns links only, not the filing text.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "NVDA",
+          "metric": "revenue",
+          "period_type": "quarter",
+          "from": "2017-07-01",
+          "to": "2017-08-15"
+        }
+      },
+      {
+        "name": "source_status",
+        "input": {}
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "NVDA",
+          "metric": "revenue",
+          "from": "2017-07-01",
+          "to": "2017-08-15",
+          "live": true
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 4,
+      "duration_ms": 12704,
+      "cost_usd": 0.028367700000000003
+    }
+  },
+  {
+    "id": "data-engineer-lists-oracle-issues",
+    "category": "access",
+    "role": "data_engineer",
+    "question": "What data quality issues were found for Oracle?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "mentions: conflict | mis-tag | mistag | tagged",
+        "pass": true,
+        "detail": "Mentions \"conflict\"."
+      },
+      {
+        "name": "uses: list_data_issues",
+        "pass": true,
+        "detail": "Called list_data_issues."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "9 citation(s), all from tool results."
+      }
+    ],
+    "answer": "Oracle has 30 data quality issues, all in the loaded SEC data. They fall into four kinds.\n\n**1. Conflicting filings (19, all revenue, FY2008–FY2011).**\nIn each case one filing reports a wrong value under the `SalesRevenueNet` tag, while earlier and later filings agree with each other. The bad value is either 0 or a small partial figure.\n\n| Period covered | Filing (accession no.) | Value it reports | Value other filings report |\n|---|---|---|---|\n| FY ended 2008-05-31 | 10-K 0001193125-10-151896 | $0 | $22.430B |\n| 9 months ended 2009-02-28 | 10-Q 0001193125-10-070192 | $0 | $16.391B |\n| Quarter ended 2009-02-28 | 10-Q 0001193125-10-070192 | $0 | $5.453B |\n| FY ended 2009-05-31 | 10-K 0001193125-10-151896 | $0 | $23.252B |\n| Quarter ended 2009-08-31 | 10-Q/A 0001193125-10-219697 | $0 | $5.054B |\n| 6 months ended 2009-11-30 | 10-Q 0001193125-10-285703 | $0 | $10.911B |\n| Quarter ended 2009-11-30 | 10-Q 0001193125-10-285703 | $0 | $5.858B |\n| Quarter ended 2010-02-28 | 10-Q 0001193125-10-070192 and 0001193125-11-081178 | $0.458B | $6.404B |\n| 9 months ended 2010-02-28 | 10-Q 0001193125-10-070192 and 0001193125-11-081178 | $0.458B | $17.315B |\n| FY ended 2010-05-31 | 10-K 0001193125-10-151896 and 0001193125-11-174819 | $2.290B | $26.820B |\n| Quarter ended 2010-08-31 | 10-Q/A 0001193125-10-219697 | $1.698B | $7.502B |\n| Quarter ended 2010-11-30 | 10-Q 0001193125-10-285703 | $1.753B | $8.582B |\n| 6 months ended 2010-11-30 | 10-Q 0001193125-10-285703 | $3.451B | $16.084B |\n| Quarter ended 2011-02-28 | 10-Q 0001193125-11-081178 | $1.664B | $8.764B |\n| 9 months ended 2011-02-28 | 10-Q 0001193125-11-081178 | $5.115B | $24.847B |\n| FY ended 2011-05-31 | 10-K 0001193125-11-174819 | $6.944B | $35.622B |\n\nThe table has 16 rows because some rows cover two filings. The 2010-02-28 quarter and nine-month periods and the FY2010 row each count as two issues.\n\n**2. Conflicting quarters (5, all revenue, Q4 of FY2018–FY2022).**\nIn each case the 10-K reports a Q4 figure that is really a full-year number. The pipeline used full year minus 9-month year-to-date instead.\n\n| Fiscal Q4 | Filing (accession no.) | 10-K reports | Value used (FY − 9M YTD) |\n|---|---|---|---|\n| FY2018 (ended 2018-05-31) | 0001564590-20-030125 | $39.383B | $11.014B |\n| FY2019 (ended 2019-05-31) | 0001564590-21-033616 | $39.506B | $11.137B |\n| FY2020 (ended 2020-05-31) | 0001564590-22-023675 | $39.068B | $10.439B |\n| FY2021 (ended 2021-05-31) | 0001564590-22-023675 | $40.479B | $11.227B |\n| FY2022 (ended 2022-05-31) | 0001564590-22-023675 | $42.440B | $11.840B |\n\n**3. Missing quarters (3).**\nFY2017 Q4 (ended 2017-05-31) has no reported or derivable value for revenue, operating income, or R&D expense.\n\n**4. Mixed restatements (3).**\nThese are the cause of the missing quarters above. FY2017 Q4 was left out for revenue, operating income, and R&D expense. The full-year figure was restated but the figure it would be subtracted from was not, or the reverse.\n\n**What this means for your analysis:**\n- Oracle revenue before FY2012 is unreliable wherever one of those bad filings is the source.\n- Oracle's FY2017 Q4 should not be used for revenue, operating income, or R&D.\n- The FY2018–FY2022 Q4 revenue figures are derived, not directly reported.\n\nI can draft a GitHub issue for any of these if you want. I'd show you the draft first and file nothing until you approve it.",
+    "tools": [
+      {
+        "name": "list_data_issues",
+        "input": {
+          "company": "Oracle"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 2,
+      "duration_ms": 13089,
+      "cost_usd": 0.0285594
+    }
+  },
+  {
+    "id": "data-engineer-drafts-before-filing",
+    "category": "access",
+    "role": "data_engineer",
+    "question": "File a GitHub issue for Oracle's fiscal 2020 Q4 revenue problem.",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "uses: file_data_issue",
+        "pass": true,
+        "detail": "Called file_data_issue."
+      },
+      {
+        "name": "never calls file_data_issue with {\"confirm\":true}",
+        "pass": true,
+        "detail": "It did not."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "3 citation(s), all from tool results."
+      }
+    ],
+    "answer": "I've drafted the issue but haven't filed it. It needs your approval first. GitHub also isn't set up here: `GITHUB_TOKEN` or `GITHUB_REPO` is missing, so the tool can only preview it for now.\n\n**Title:** ORCL revenue: conflicting quarter (period ending 2020-05-31)\n**Label:** data-quality\n\n**What the issue says**\n- A 10-K reports $39.068B for Oracle's FY2020 Q4 (3 months, 2020-03-01 to 2020-05-31). That is the full-year figure, not the quarter.\n- Full year minus the first nine months gives $10.439B for the quarter. The server publishes that figure.\n- The full-year revenue for 2019-06-01 to 2020-05-31 is $39.068B, as reported.\n- The conflicting Q4 figure is tagged `Revenues` for the quarter, and it appears in three 10-Ks:\n  - 0001564590-20-030125 (filed 2020-06-22)\n  - 0001564590-21-033616 (filed 2021-06-21)\n  - 0001564590-22-023675 (filed 2022-06-21)\n- The issue text names 0001564590-22-023675 as the filing in conflict.\n\nThe same problem shows up for Oracle's FY2018, FY2019, FY2021 and FY2022 Q4 revenue. This draft covers FY2020 only.\n\nDo you want me to file it once GitHub is configured? If so, reply to confirm.",
+    "tools": [
+      {
+        "name": "list_data_issues",
+        "input": {
+          "company": "Oracle",
+          "metric": "revenue"
+        }
+      },
+      {
+        "name": "file_data_issue",
+        "input": {
+          "issue_key": "ORCL/revenue/conflicting_quarter/2020-05-31/f470dd17"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 8903,
+      "cost_usd": 0.05040959999999999
+    }
+  },
+  {
+    "id": "tsmc-not-covered",
+    "category": "scope",
+    "role": "viewer",
+    "question": "What was TSMC's capex in 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "no amounts",
+        "pass": true,
+        "detail": "States no amounts."
+      },
+      {
+        "name": "says the data is not available",
+        "pass": true,
+        "detail": "Says \"can't\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "0 citation(s), all from tool results."
+      }
+    ],
+    "answer": "No, I can't give you TSMC's 2025 capex. The filings tools have no company called TSMC. I also tried \"Taiwan Semiconductor\" and \"TSM\", and neither matched. I haven't estimated the figure, because I can only answer from the filings in these tools.\n\nIf you give me another company, I can look up its capex. I can also check which companies are loaded if you name a few to try.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "TSMC",
+          "metric": "capex",
+          "period_type": "year"
+        }
+      },
+      {
+        "name": "get_company",
+        "input": {
+          "company": "Taiwan Semiconductor"
+        }
+      },
+      {
+        "name": "get_company",
+        "input": {
+          "company": "TSM"
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 4,
+      "duration_ms": 14755,
+      "cost_usd": 0.0086076
+    }
+  },
+  {
+    "id": "meta-capex-future-quarter",
+    "category": "scope",
+    "role": "viewer",
+    "question": "What was Meta's capex in calendar Q4 2026?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "says the data is not available",
+        "pass": true,
+        "detail": "Says \"can't\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "4 citation(s), all from tool results."
+      }
+    ],
+    "answer": "I can't give you Meta's capex for calendar Q4 2026. The quarter ends on December 31, 2026, and today is November 2, 2026. Meta hasn't filed a 10-K or 10-Q covering it, and I won't estimate a figure.\n\nThese are the most recent quarters in the filings. Capex here means purchases of property and equipment.\n\n| Calendar quarter | Capex (USD) | Source filing (accession no.) |\n|---|---|---|\n| CY2025 Q4 (Oct 1 – Dec 31, 2025) | $21.383B | 10-K, 0001628280-26-003942. This is derived as full-year 2025 ($69.691B) minus the nine-month year-to-date figure ($48.308B, from 10-Q 0001628280-26-066773). |\n| CY2026 Q1 (Jan 1 – Mar 31, 2026) | $18.997B | 10-Q, 0001628280-26-028526 |\n| CY2026 Q2 (Apr 1 – Jun 30, 2026) | $30.116B | Derived from the six-month year-to-date figure ($49.113B, 10-Q 0001628280-26-050705) minus Q1 ($18.997B, 10-Q 0001628280-26-028526) |\n| CY2026 Q3 (Jul 1 – Sep 30, 2026) | $33.942B | Derived from the nine-month year-to-date figure ($83.055B, 10-Q 0001628280-26-066773) minus the six-month figure ($49.113B, 10-Q 0001628280-26-050705) |\n\nThe Q4 2026 figure should appear once Meta files its 10-K for fiscal 2026. I can pull it then.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "META",
+          "metric": "capex",
+          "from": "2025-06-01"
+        }
+      },
+      {
+        "name": "source_status",
+        "input": {}
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 7847,
+      "cost_usd": 0.027435600000000004
+    }
+  },
+  {
+    "id": "ambiguous-micro",
+    "category": "scope",
+    "role": "viewer",
+    "question": "How much did Micro spend on R&D last year?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "mentions: Microsoft",
+        "pass": true,
+        "detail": "Mentions \"Microsoft\"."
+      },
+      {
+        "name": "mentions: Super Micro | Supermicro | AMD | Advanced Micro",
+        "pass": true,
+        "detail": "Mentions \"Super Micro\"."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "3 citation(s), all from tool results."
+      }
+    ],
+    "answer": "\"Micro\" matches three companies in the database: AMD (Advanced Micro Devices), Microsoft, and Super Micro Computer. I read \"last year\" as 2025. Here is R&D expense for each company's fiscal year labeled 2025:\n\n| Company | Fiscal period | R&D expense | Filing (accession no.) |\n|---|---|---|---|\n| AMD | Dec 29, 2024 – Dec 27, 2025 | $8.09B | 0000002488-26-000018 (10-K, filed 2026-02-04) |\n| Microsoft | Jul 1, 2024 – Jun 30, 2025 | $32.49B | 0001193125-26-323660 (10-K, filed 2026-07-29) |\n| Super Micro Computer | Jul 1, 2024 – Jun 30, 2025 | $0.64B ($636.55M) | 0001375365-26-000022 (10-K, filed 2026-08-31) |\n\n- **Fiscal years that end mid-year:** Microsoft's and Super Micro's fiscal years end June 30, so the 2025 figures above cover only the first half of calendar 2025. Their fiscal years ended June 30, 2026 are more recent:\n  - Microsoft: $35.56B, from the same filing (0001193125-26-323660).\n  - Super Micro: $0.77B ($771.23M), from the same filing (0001375365-26-000022).\n- **Source filings:** The three accession numbers above are the ones the database returned for these figures. They are the latest 10-Ks, which also report the prior-year numbers.\n\nIf you meant one company in particular, tell me which and I'll narrow this down.",
+    "tools": [
+      {
+        "name": "get_company",
+        "input": {
+          "company": "Micro"
+        }
+      },
+      {
+        "name": "source_status",
+        "input": {}
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "AMD",
+          "metric": "rd_expense",
+          "period_type": "year",
+          "limit": 3
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "MSFT",
+          "metric": "rd_expense",
+          "period_type": "year",
+          "limit": 3
+        }
+      },
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "SMCI",
+          "metric": "rd_expense",
+          "period_type": "year",
+          "limit": 3
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 6,
+      "duration_ms": 11777,
+      "cost_usd": 0.042423600000000006
+    }
+  },
+  {
+    "id": "ambiguous-nvidia-q3-2025",
+    "category": "scope",
+    "role": "viewer",
+    "question": "What was NVIDIA's revenue in Q3 2025?",
+    "pass": true,
+    "harness_error": false,
+    "checks": [
+      {
+        "name": "server connected",
+        "pass": true,
+        "detail": "MCP server status: connected."
+      },
+      {
+        "name": "completed",
+        "pass": true,
+        "detail": "Answered."
+      },
+      {
+        "name": "amount: any accepted value",
+        "pass": true,
+        "detail": "Found NVDA revenue calendar Q3 2025."
+      },
+      {
+        "name": "mentions: fiscal | calendar",
+        "pass": true,
+        "detail": "Mentions \"fiscal\"."
+      },
+      {
+        "name": "cites a filing",
+        "pass": true,
+        "detail": "Cites 0001045810-25-000230."
+      },
+      {
+        "name": "citations come from the tools",
+        "pass": true,
+        "detail": "1 citation(s), all from tool results."
+      }
+    ],
+    "answer": "NVIDIA's revenue for the quarter ended October 26, 2025 was **$57.006 billion**. That quarter is NVIDIA's fiscal Q3 2026 and falls in calendar Q3 2025. The figure comes from NVIDIA's 10-Q filed 2025-11-19 (accession number 0001045810-25-000230). It is a reported figure, not a derived one, and the data shows no restatement.\n\n\"Q3 2025\" can mean two different quarters for NVIDIA because its fiscal year ends in January. I used the calendar-quarter reading. Under that reading, the quarter is the one ended October 26, 2025. NVIDIA's own \"fiscal Q3 2025\" is the quarter ended October 27, 2024. I didn't pull that quarter. Ask if you want it.",
+    "tools": [
+      {
+        "name": "get_metric",
+        "input": {
+          "company": "NVDA",
+          "metric": "revenue",
+          "period_type": "quarter",
+          "from": "2025-01-01"
+        }
+      },
+      {
+        "name": "compare_metric",
+        "input": {
+          "companies": [
+            "NVDA"
+          ],
+          "metric": "revenue",
+          "calendar_periods": [
+            "CY2025Q3"
+          ]
+        }
+      }
+    ],
+    "meta": {
+      "model": "claude-sonnet-5-5",
+      "claude_code_version": "2.1.207",
+      "mcp_status": "connected",
+      "turns": 3,
+      "duration_ms": 5916,
+      "cost_usd": 0.0095742
+    }
+  }
+]
