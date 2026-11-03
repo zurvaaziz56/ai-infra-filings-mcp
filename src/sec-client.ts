@@ -110,10 +110,11 @@ export class SecClient {
     const url = new URL('https://efts.sec.gov/LATEST/search-index');
     url.searchParams.set('q', params.query);
     if (params.forms?.length) url.searchParams.set('forms', params.forms.join(','));
+    // EDGAR silently ignores a custom range unless it has both ends.
     if (params.from || params.to) {
       url.searchParams.set('dateRange', 'custom');
-      if (params.from) url.searchParams.set('startdt', params.from);
-      if (params.to) url.searchParams.set('enddt', params.to);
+      url.searchParams.set('startdt', params.from ?? '2001-01-01');
+      url.searchParams.set('enddt', params.to ?? new Date().toISOString().slice(0, 10));
     }
     if (params.offset) url.searchParams.set('from', String(params.offset));
     return this.getJson(url.toString());

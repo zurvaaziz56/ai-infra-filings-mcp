@@ -45,7 +45,7 @@ The metrics are `capex`, `revenue`, `rd_expense` and `operating_income` for NVDA
 
 - **SEC company facts** (`data.sec.gov`) are every XBRL number a company has filed. They are free, need no key, and are the primary source behind most financial data products.
 - **SEC submissions** give each company's fiscal year end and its latest filings.
-- **SEC full-text search** (`efts.sec.gov`) covers what the numbers cannot. AI labs such as Anthropic and OpenAI are private and file nothing, but their partners and suppliers mention them. A search for "Anthropic" in 10-Ks and 10-Qs filed since 2025 returns 127 filings, from Amazon, Zoom, TeraWulf and others.
+- **SEC full-text search** (`efts.sec.gov`) covers what the numbers cannot. AI labs such as Anthropic and OpenAI are private and file nothing, but their partners and suppliers mention them. A search for "Anthropic" in 10-Ks and 10-Qs filed from 2025 to November 2026 returns 109 filings, from Amazon, Meta, NVIDIA, Salesforce, Reddit, Zoom and others.
 - **A Postgres warehouse** holds the normalized values. It answers in milliseconds, keeps working when the SEC does not, and keeps the raw facts so that every number can be traced.
 - **GitHub Issues** is where data problems become work someone can pick up. It is the one source the server writes to, so only data engineers and admins can use it, and nothing is filed without `confirm`.
 
@@ -167,7 +167,7 @@ To use Postgres instead of PGlite, start it with `docker compose up -d`, run `np
 npm test
 ```
 
-The 32 tests make no network requests. They run against small excerpts of real SEC responses in [`test/fixtures`](test/fixtures), and against a fake GitHub that stores issues in memory. The tests cover:
+The 42 tests make no network requests. They run against small excerpts of real SEC responses in [`test/fixtures`](test/fixtures), and against a fake GitHub that stores issues in memory. The tests cover:
 
 - NVIDIA's tag switch
 - the duplicate rule, including Super Micro's 2019 amendments
@@ -183,6 +183,24 @@ The 32 tests make no network requests. They run against small excerpts of real S
 
 CI runs the type check, lint and tests on pushes to `main` and on pull requests.
 
+## Evals
+
+The tests check the code. The [evals](evals/README.md) check the workflow: Claude answers 27 analyst questions using only this server, and a deterministic grader checks the numbers, the citations and the refusals.
+
+The first valid run passed 24 of 27. Its failures exposed three things:
+
+- **A silently ignored date filter:** EDGAR was ignoring the search date range.
+- **Untraceable citations:** search results had no accession numbers.
+- **An unapproved write:** the agent filed a GitHub issue without asking.
+
+Setting up the harness also exposed a startup delay that left MCP clients without tools. After the fixes, four consecutive runs passed 27 of 27.
+
+```bash
+npm run eval
+```
+
+The agent is Claude Code, so a run needs the `claude` command installed and signed in.
+
 ## Limitations
 
 - **US GAAP filers only.** The server reads only us-gaap tags, so foreign companies that report under IFRS, such as TSMC, are not covered.
@@ -194,6 +212,7 @@ CI runs the type check, lint and tests on pushes to `main` and on pull requests.
 - **Roles are not authenticated.** Over stdio, whoever configures the MCP client chooses `MCP_ROLE`. An HTTP version would take the role from the caller's token.
 - **Full-text search is fragile and only returns links.** It uses the endpoint behind EDGAR's full-text search page, and its response format could change without notice.
 - **The duplicate check has a ceiling.** It reads up to 1,000 issues in the repository. Past that, the server refuses to file rather than risk a duplicate.
+- **Approval before filing is a prompt, not a lock.** The rule that a person approves each GitHub issue lives in the tool's description. The agent followed it in every eval run after the fix, but the protocol does not enforce it.
 - **Issues are filed as the token's owner.** The audit log records which role filed an issue, but GitHub shows the token's account as the author.
 - **Data refreshes only on load.** The warehouse changes only when `npm run load` runs. `get_metric` with `live: true` rebuilds one company's values on demand.
 
