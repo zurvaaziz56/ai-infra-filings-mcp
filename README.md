@@ -193,13 +193,19 @@ The first valid run passed 24 of 27. Its failures exposed three things:
 - **Untraceable citations:** search results had no accession numbers.
 - **An unapproved write:** the agent filed a GitHub issue without asking.
 
-Setting up the harness also exposed a startup delay that left MCP clients without tools. After the fixes, four consecutive runs passed 27 of 27.
+Setting up the harness also exposed a startup delay that left MCP clients without tools, which the [post-mortem](docs/post-mortems/2026-11-03-evals-ran-without-tools.md) covers. After the fixes, four consecutive runs passed 27 of 27.
 
 ```bash
 npm run eval
 ```
 
 The agent is Claude Code, so a run needs the `claude` command installed and signed in.
+
+## Decisions and incidents
+
+- [ADR 1: Which filing wins when a period is reported more than once](docs/adr/0001-which-filing-wins.md)
+- [Post-mortem: The first eval run tested an agent with no tools](docs/post-mortems/2026-11-03-evals-ran-without-tools.md)
+- [Data notes: every data problem found in the filings, with evidence](docs/data-notes.md)
 
 ## Limitations
 

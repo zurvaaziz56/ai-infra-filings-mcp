@@ -87,6 +87,8 @@ A full run takes about 2 minutes with 3 cases at a time. Claude Code reports abo
    - **The runner** sets the wait.
    - **The grader** now checks that the server connected, so a run without tools can never pass again.
 
+   The [post-mortem](../docs/post-mortems/2026-11-03-evals-ran-without-tools.md) covers how this was diagnosed.
+
 **In the server**
 
 2. **The search date filter was silently ignored.** EDGAR applies a custom date range only when it has both a start and an end date. A search for Anthropic "since 2025" returned 127 filings, some from 2023. With both dates it returns 109. The README had printed the wrong figure. The agent caught this by pointing out that some results were older than requested. The server now always sends both dates.
