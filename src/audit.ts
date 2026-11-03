@@ -10,6 +10,7 @@ export interface AuditEntry {
   outcome: 'ok' | 'degraded' | 'error' | 'denied';
   duration_ms: number;
   sec_requests: number;
+  github_requests: number;
 }
 
 // Arguments are hashed, not stored, so the log can show repeated calls without keeping

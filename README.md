@@ -1,6 +1,6 @@
 # AI Infra Filings MCP
 
-An MCP server that answers questions about how much public tech companies spend on AI infrastructure. It uses real SEC filings, and every number it returns names the filing it came from.
+An MCP server that answers questions about how much public tech companies spend on AI infrastructure. It uses real SEC filings, and every number it returns names the filing it came from. When the filings themselves are wrong, it can file the problem as a GitHub issue with the evidence attached.
 
 ## The problem
 
@@ -36,8 +36,8 @@ Each cell in the response also carries the accession number, form, filing date a
 | `source_status` | Health of the warehouse and the SEC connection, and the caller's budget | all |
 | `search_filings` | Live full-text search of all SEC filings, for example for "Anthropic" | analyst and up |
 | `get_raw_facts` | Facts exactly as the SEC returned them, before de-duplication | data_engineer, admin |
-| `list_data_issues` | Problems found while loading: conflicts, restatements, gaps | data_engineer, admin |
-| GitHub data-quality tool | Files a data issue as a GitHub issue with its evidence | coming in Phase 2 |
+| `list_data_issues` | Problems found while loading, such as conflicts, restatements and gaps, each with a key | data_engineer, admin |
+| `file_data_issue` | Drafts a GitHub issue for one of those problems, with the filings, the facts as filed and the published value. With `confirm`, files it once | data_engineer, admin |
 
 The metrics are `capex`, `revenue`, `rd_expense` and `operating_income` for NVDA, MSFT, GOOGL, AMZN, META, ORCL, AMD, AVGO, AAPL, CRM, PLTR, SNOW, CRWV, DELL and SMCI.
 
@@ -47,6 +47,17 @@ The metrics are `capex`, `revenue`, `rd_expense` and `operating_income` for NVDA
 - **SEC submissions** give each company's fiscal year end and its latest filings.
 - **SEC full-text search** (`efts.sec.gov`) covers what the numbers cannot. AI labs such as Anthropic and OpenAI are private and file nothing, but their partners and suppliers mention them. A search for "Anthropic" in 10-Ks and 10-Qs filed since 2025 returns 127 filings, from Amazon, Zoom, TeraWulf and others.
 - **A Postgres warehouse** holds the normalized values. It answers in milliseconds, keeps working when the SEC does not, and keeps the raw facts so that every number can be traced.
+- **GitHub Issues** is where data problems become work someone can pick up. It is the one source the server writes to, so only data engineers and admins can use it, and nothing is filed without `confirm`.
+
+## Filing a data problem
+
+A data engineer lists the problems for a company, then turns one into an issue:
+
+1. `list_data_issues` with `company: "ORCL"` returns each problem with a key, such as `ORCL/revenue/conflicting_quarter/2020-05-31/…`.
+2. `file_data_issue` with that key returns a draft and contacts nothing. The draft explains the problem, links each filing involved, lists every fact filed for the period, and shows what the server publishes instead.
+3. `file_data_issue` with the key and `confirm: true` files it on `GITHUB_REPO`, labelled `data-quality`. Calling it again returns the same issue.
+
+Each issue body ends with a hidden marker that holds the key. Before filing, the server looks for that marker among the repository's issues, so a problem is filed only once, even across restarts or by different people.
 
 ## How the messy data is handled
 
@@ -78,17 +89,21 @@ Roles live in [`config/roles.json`](config/roles.json), and `MCP_ROLE` picks one
 - Each role has its own SEC request budget per minute, under the shared limit of 8 requests per second.
 - With Postgres, the server connects as `filings_reader`, which can read the warehouse but not change it.
 
-Adding a tool means adding it to `src/tools.ts` and granting it in `config/roles.json`. The access code does not change.
+Adding a tool means adding it to `src/tools.ts` and granting it in `config/roles.json`. Phase 2 added `file_data_issue` that way, without changing `src/access.ts`.
 
 ## When things go wrong
 
+The SEC and GitHub share the same timeout, retry and circuit-breaker code ([`src/http.ts`](src/http.ts)), with a separate circuit for each.
+
 | Situation | What happens |
 |---|---|
-| The SEC is slow | Each request times out after 20 seconds |
-| The SEC returns 429 or 503 | Retries up to twice, waiting as long as `Retry-After` says, up to 10 seconds |
-| The SEC keeps failing | After 3 failures in a row, SEC requests pause for 30 seconds |
+| A source is slow | Each request times out after 20 seconds |
+| A source is rate-limiting | Retries up to twice, waiting as long as `Retry-After` (or GitHub's rate-limit reset) says, up to 10 seconds |
+| A source keeps failing | After 3 failures in a row, requests to it pause for 30 seconds |
 | The SEC is unavailable | `get_company` and `get_metric` answer from the warehouse with status `stale` and an `as_of` date. `search_filings` returns no data and status `unavailable` |
-| A role uses up its budget | Live requests stop for that role, and answers come from the warehouse |
+| GitHub is unavailable, or `GITHUB_TOKEN` is missing or rejected | `file_data_issue` returns the draft with status `not_filed`, so it can be filed by hand |
+| Creating a GitHub issue fails with a server error | The create is not retried, because GitHub may have saved it. The next call finds the saved issue by its marker instead of filing a duplicate |
+| A role uses up its budget | Live SEC requests stop for that role, and answers come from the warehouse |
 | `SEC_USER_AGENT` is missing, or the SEC returns 403 | A configuration error that says what to set |
 | One company fails to load | That company keeps its previous data, and the others load |
 
@@ -97,7 +112,7 @@ Every tool returns `{ data, sources: [{ name, status, detail, as_of }] }`. Error
 Each call adds one line to `logs/audit.jsonl`:
 
 ```json
-{"ts":"2026-11-03T04:43:19.889Z","role":"data_engineer","tool":"get_metric","args_sha256":"0641c657…","outcome":"ok","duration_ms":2182,"sec_requests":1}
+{"ts":"2026-11-03T04:43:19.889Z","role":"data_engineer","tool":"get_metric","args_sha256":"0641c657…","outcome":"ok","duration_ms":2182,"sec_requests":1,"github_requests":0}
 ```
 
 The arguments are hashed rather than stored, so the log shows repeated calls without recording what people asked.
@@ -142,6 +157,8 @@ Other MCP clients take the same command in their JSON configuration:
 }
 ```
 
+To let data engineers file issues, create a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new) limited to one repository, with **Issues: Read and write** and nothing else. In `.env`, set `GITHUB_TOKEN` to the token and `GITHUB_REPO` to that repository as `owner/name`. Without them, `file_data_issue` still shows drafts.
+
 To use Postgres instead of PGlite, start it with `docker compose up -d`, run `npm run load` with the owner's `DATABASE_URL`, and give the server the reader's `DATABASE_URL`. Both URLs are in [`.env.example`](.env.example).
 
 ## Tests
@@ -150,7 +167,7 @@ To use Postgres instead of PGlite, start it with `docker compose up -d`, run `np
 npm test
 ```
 
-The 26 tests make no network requests. They run against small excerpts of real SEC responses in [`test/fixtures`](test/fixtures). The tests cover:
+The 32 tests make no network requests. They run against small excerpts of real SEC responses in [`test/fixtures`](test/fixtures), and against a fake GitHub that stores issues in memory. The tests cover:
 
 - NVIDIA's tag switch
 - the duplicate rule, including Super Micro's 2019 amendments
@@ -160,6 +177,9 @@ The 26 tests make no network requests. They run against small excerpts of real S
 - access control and per-role budgets
 - rate limiting, `Retry-After` and the circuit breaker
 - stale fallback and the audit log
+- GitHub issue drafts and their evidence
+- filing an issue only once, including when a create fails after GitHub saved it
+- GitHub rate limits and rejected tokens, without the token ever appearing in output or logs
 
 CI runs the type check, lint and tests on pushes to `main` and on pull requests.
 
@@ -173,6 +193,8 @@ CI runs the type check, lint and tests on pushes to `main` and on pull requests.
 - **Limits are per process.** The rate limiter and role budgets live in memory. Several server processes on one machine could together exceed the SEC's limit.
 - **Roles are not authenticated.** Over stdio, whoever configures the MCP client chooses `MCP_ROLE`. An HTTP version would take the role from the caller's token.
 - **Full-text search is fragile and only returns links.** It uses the endpoint behind EDGAR's full-text search page, and its response format could change without notice.
+- **The duplicate check has a ceiling.** It reads up to 1,000 issues in the repository. Past that, the server refuses to file rather than risk a duplicate.
+- **Issues are filed as the token's owner.** The audit log records which role filed an issue, but GitHub shows the token's account as the author.
 - **Data refreshes only on load.** The warehouse changes only when `npm run load` runs. `get_metric` with `live: true` rebuilds one company's values on demand.
 
 ## License
