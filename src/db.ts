@@ -20,6 +20,17 @@ export async function openDb(options: { databaseUrl?: string; dataDir?: string }
   return options.databaseUrl ? openPostgres(options.databaseUrl) : openPglite(options.dataDir);
 }
 
+// Lets the server answer the MCP handshake while the database is still opening. Opening
+// PGlite takes a second or more, and some clients send their first request before then.
+export function deferredDb(opening: Promise<Db>): Db {
+  return {
+    query: async <T>(sql: string, params?: unknown[]) => (await opening).query<T>(sql, params),
+    exec: async (sql) => (await opening).exec(sql),
+    transaction: async (fn) => (await opening).transaction(fn),
+    close: async () => (await opening).close(),
+  };
+}
+
 function openPostgres(connectionString: string): Db {
   const types = {
     getTypeParser: ((oid: number, format?: 'text' | 'binary') =>

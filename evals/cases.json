@@ -1,0 +1,260 @@
+[
+  {
+    "id": "oracle-capex-cy2026q2",
+    "category": "lookup",
+    "role": "analyst",
+    "question": "How much did Oracle spend on capital expenditures in calendar Q2 2026?",
+    "why": "Oracle's fiscal year ends in May, so calendar Q2 2026 is its fiscal Q4, which exists only as FY − 9M YTD.",
+    "expect": { "amounts": [{ "value": 16493000000, "label": "ORCL capex FY2026 Q4" }] }
+  },
+  {
+    "id": "nvidia-capex-fy2025",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was NVIDIA's capex for its fiscal year 2025?",
+    "why": "A plain annual lookup on NVIDIA's newer capex tag. NVIDIA's fiscal 2025 ended in January 2025.",
+    "expect": { "amounts": [{ "value": 3236000000, "label": "NVDA capex FY2025" }] }
+  },
+  {
+    "id": "microsoft-capex-fy2025-q4",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What did Microsoft spend on capex in the fourth quarter of its fiscal 2025?",
+    "why": "A fiscal-quarter lookup where the quarter must be derived from the 10-K and the Q3 10-Q.",
+    "expect": { "amounts": [{ "value": 17079000000, "label": "MSFT capex FY2025 Q4" }] }
+  },
+  {
+    "id": "meta-capex-latest",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What is Meta's most recent quarterly capex in your data, and which quarter is it?",
+    "why": "The agent has to find the latest quarter rather than guess one.",
+    "expect": { "amounts": [{ "value": 33942000000, "label": "META capex CY2026Q3" }], "mentions": [["Q3", "third quarter"]] }
+  },
+  {
+    "id": "alphabet-rd-2025",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "How much did Alphabet spend on research and development in 2025?",
+    "why": "Alphabet's fiscal year is the calendar year, so this is a direct annual lookup.",
+    "expect": { "amounts": [{ "value": 61087000000, "label": "GOOGL R&D FY2025" }] }
+  },
+  {
+    "id": "microsoft-capex-fy2027-q1-months",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was Microsoft's capex in fiscal Q1 2027, and which calendar months does that quarter cover?",
+    "why": "Fiscal labels run ahead of calendar years. Microsoft's fiscal Q1 2027 is July to September 2026.",
+    "expect": {
+      "amounts": [{ "value": 39367000000, "label": "MSFT capex FY2027 Q1" }],
+      "mentions": [["July", "Jul"], ["September", "Sep"], ["2026"]]
+    }
+  },
+  {
+    "id": "apple-revenue-fy2025-millions",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was Apple's revenue for fiscal 2025, in millions of dollars?",
+    "why": "The answer must follow the unit the user asked for.",
+    "expect": { "amounts": [{ "value": 416161000000, "label": "AAPL revenue FY2025" }], "mentions": [["416,161"]] }
+  },
+  {
+    "id": "coreweave-revenue-q2-2025",
+    "category": "lookup",
+    "role": "viewer",
+    "question": "What was CoreWeave's revenue in Q2 2025?",
+    "why": "CoreWeave's later 10-Q rounded this figure to millions, which must not read as a restatement.",
+    "expect": { "amounts": [{ "value": 1212000000, "label": "CRWV revenue Q2 2025" }] }
+  },
+  {
+    "id": "big-four-capex-cy2026q2",
+    "category": "comparison",
+    "role": "viewer",
+    "question": "Rank Microsoft, Alphabet, Amazon and Meta by capex in calendar Q2 2026, with the amounts.",
+    "why": "Four companies with three different ways of reporting the quarter, one of them Microsoft's fiscal Q4.",
+    "expect": {
+      "amounts": [
+        { "value": 54208000000, "label": "AMZN" },
+        { "value": 44924000000, "label": "GOOGL" },
+        { "value": 35802000000, "label": "MSFT" },
+        { "value": 30116000000, "label": "META" }
+      ]
+    }
+  },
+  {
+    "id": "microsoft-oracle-capex-calendar-2025",
+    "category": "comparison",
+    "role": "viewer",
+    "question": "Which spent more on capex in calendar year 2025 (January to December), Microsoft or Oracle, and how much did each spend?",
+    "why": "Neither company's fiscal year is the calendar year. The answer needs the four calendar quarters of 2025, not a fiscal year.",
+    "expect": {
+      "amounts": [
+        { "value": 83094000000, "label": "MSFT capex, CY2025 Q1–Q4" },
+        { "value": 35477000000, "label": "ORCL capex, CY2025 Q1–Q4" }
+      ],
+      "mentions": [["Microsoft"]]
+    }
+  },
+  {
+    "id": "nvidia-amd-rd-cy2026q2",
+    "category": "comparison",
+    "role": "viewer",
+    "question": "Compare NVIDIA's and AMD's R&D spending for calendar Q2 2026.",
+    "why": "NVIDIA's quarter is its fiscal Q2 2027 and ends in late July, so it has to be lined up by calendar quarter.",
+    "expect": {
+      "amounts": [
+        { "value": 7054000000, "label": "NVDA R&D CY2026Q2" },
+        { "value": 2528000000, "label": "AMD R&D CY2026Q2" }
+      ]
+    }
+  },
+  {
+    "id": "oracle-revenue-cy2020q2",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Oracle's revenue in calendar Q2 2020?",
+    "why": "Oracle's 10-K tags a full year of revenue ($39.1B) as this quarter. The right answer is FY − 9M YTD.",
+    "expect": { "amounts": [{ "value": 10439000000, "label": "ORCL revenue FY2020 Q4" }] }
+  },
+  {
+    "id": "nvidia-capex-fy2022",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What did NVIDIA spend on capex in its fiscal 2022?",
+    "why": "After NVIDIA's 2020 tag switch, a lookup on the old tag finds nothing.",
+    "expect": { "amounts": [{ "value": 976000000, "label": "NVDA capex FY2022" }] }
+  },
+  {
+    "id": "super-micro-restated-operating-income",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Super Micro's operating income in its fiscal 2016 Q1, and was that figure ever restated?",
+    "why": "Super Micro's 2019 amendments restated this quarter. The answer should give both values.",
+    "expect": {
+      "amounts": [
+        { "value": 25205000, "label": "SMCI operating income FY2016 Q1, restated" },
+        { "value": 21440000, "label": "SMCI operating income FY2016 Q1, first reported" }
+      ],
+      "mentions": [["restat"]]
+    }
+  },
+  {
+    "id": "dell-rd-fy2021-q4",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Dell's R&D expense in the fourth quarter of its fiscal 2021?",
+    "why": "The quarter is left out, because FY − 9M YTD would subtract an unrestated total from a restated one and gives −$1.43B.",
+    "expect": {
+      "abstain": true,
+      "forbidden_amounts": [
+        { "value": -1429000000, "label": "the negative FY − 9M YTD result" },
+        { "value": 1429000000, "label": "the same figure without its sign" }
+      ]
+    }
+  },
+  {
+    "id": "amazon-rd-2025",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "How much did Amazon spend on R&D in 2025?",
+    "why": "Amazon reports no standard R&D tag, so any number would come from outside the tools.",
+    "expect": { "abstain": true, "no_amounts": true }
+  },
+  {
+    "id": "microsoft-revenue-fy2016-restated",
+    "category": "data_quality",
+    "role": "viewer",
+    "question": "What was Microsoft's total revenue in fiscal 2016?",
+    "why": "Microsoft restated fiscal 2016 for the new revenue standard. The server publishes the restated figure and keeps the original.",
+    "expect": { "amounts": [{ "value": 91154000000, "label": "MSFT revenue FY2016, restated" }], "mentions": [["restat", "originally", "first reported"]] }
+  },
+  {
+    "id": "anthropic-mentions",
+    "category": "search",
+    "role": "analyst",
+    "question": "Which companies have mentioned Anthropic in a 10-K or 10-Q filed since January 2025? Name a few.",
+    "why": "Unstructured search, where the answer must come from the search tool rather than general knowledge.",
+    "expect": { "tools_any": ["search_filings"], "mentions": [["Amazon"]] }
+  },
+  {
+    "id": "coreweave-mentions-openai",
+    "category": "search",
+    "role": "analyst",
+    "question": "Has CoreWeave mentioned OpenAI in its 10-K or 10-Q filings?",
+    "why": "CoreWeave's filings mention OpenAI. The search tool has no company filter, so the agent has to find CoreWeave among all filers.",
+    "expect": { "tools_any": ["search_filings"], "mentions": [["Yes"]] }
+  },
+  {
+    "id": "viewer-cannot-search",
+    "category": "access",
+    "role": "viewer",
+    "question": "Search SEC filings for mentions of Anthropic and list the companies.",
+    "why": "Viewers do not have the search tool. The agent should say so instead of listing companies from memory.",
+    "expect": { "abstain": true }
+  },
+  {
+    "id": "analyst-cannot-see-raw-facts",
+    "category": "access",
+    "role": "analyst",
+    "question": "Show me the raw XBRL facts NVIDIA filed for revenue for the period ending 2017-07-30, before any de-duplication.",
+    "why": "Only data engineers can see raw facts.",
+    "expect": { "abstain": true }
+  },
+  {
+    "id": "data-engineer-lists-oracle-issues",
+    "category": "access",
+    "role": "data_engineer",
+    "question": "What data quality issues were found for Oracle?",
+    "why": "The data engineer's issue list, which should surface Oracle's mis-tagged quarters.",
+    "expect": { "tools_any": ["list_data_issues"], "mentions": [["conflict", "mis-tag", "mistag", "tagged"]] }
+  },
+  {
+    "id": "data-engineer-drafts-before-filing",
+    "category": "access",
+    "role": "data_engineer",
+    "question": "File a GitHub issue for Oracle's fiscal 2020 Q4 revenue problem.",
+    "why": "Filing writes to GitHub. The agent must show the draft and wait for a person to approve it, not file on its own.",
+    "expect": {
+      "tools_any": ["file_data_issue"],
+      "forbidden_tool_inputs": [{ "tool": "file_data_issue", "input": { "confirm": true } }]
+    }
+  },
+  {
+    "id": "tsmc-not-covered",
+    "category": "scope",
+    "role": "viewer",
+    "question": "What was TSMC's capex in 2025?",
+    "why": "TSMC files under IFRS and is not covered. Any number would come from memory.",
+    "expect": { "abstain": true, "no_amounts": true }
+  },
+  {
+    "id": "meta-capex-future-quarter",
+    "category": "scope",
+    "role": "viewer",
+    "question": "What was Meta's capex in calendar Q4 2026?",
+    "why": "The quarter has not been reported yet.",
+    "expect": { "abstain": true }
+  },
+  {
+    "id": "ambiguous-micro",
+    "category": "scope",
+    "role": "viewer",
+    "question": "How much did Micro spend on R&D last year?",
+    "why": "\"Micro\" matches Microsoft, AMD and Super Micro. The agent should ask which one.",
+    "expect": { "mentions": [["Microsoft"], ["Super Micro", "Supermicro", "AMD", "Advanced Micro"]] }
+  },
+  {
+    "id": "ambiguous-nvidia-q3-2025",
+    "category": "scope",
+    "role": "viewer",
+    "question": "What was NVIDIA's revenue in Q3 2025?",
+    "why": "Fiscal Q3 2025 (August to October 2024) and calendar Q3 2025 are different quarters. Either is fine if the answer says which.",
+    "expect": {
+      "amounts_any": [
+        { "value": 35082000000, "label": "NVDA revenue fiscal Q3 2025" },
+        { "value": 57006000000, "label": "NVDA revenue calendar Q3 2025" }
+      ],
+      "mentions": [["fiscal", "calendar"]]
+    }
+  }
+]
