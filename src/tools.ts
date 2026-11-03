@@ -1,13 +1,16 @@
+import type { ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import type { Role } from './access.js';
+import { type DataIssueRow, draftIssue, findDataIssue, issueKey } from './data-issue-report.js';
 import type { Db } from './db.js';
 import { SourceError } from './errors.js';
+import type { GitHubClient } from './github-client.js';
 import { METRIC_IDS, METRICS } from './metrics.js';
 import { DATA_ISSUE_KINDS, extractRawFacts, type MetricValue, normalizeMetric, PERIODIC_FORMS, tagUsage } from './normalize.js';
 import type { SecClient, Submissions } from './sec-client.js';
 
 export interface SourceStatus {
-  name: 'warehouse' | 'sec_live';
+  name: 'warehouse' | 'sec_live' | 'github';
   status: 'ok' | 'stale' | 'unavailable';
   detail?: string;
   as_of?: string | null;
@@ -22,6 +25,7 @@ export interface ToolResult {
 export interface ToolContext {
   db: Db;
   sec: SecClient;
+  github: GitHubClient;
   role: Role;
 }
 
@@ -30,6 +34,7 @@ export interface Tool<Shape extends z.ZodRawShape = z.ZodRawShape> {
   title: string;
   description: string;
   inputSchema: Shape;
+  annotations?: ToolAnnotations;
   handler: (args: z.infer<z.ZodObject<Shape>>, ctx: ToolContext) => Promise<ToolResult>;
 }
 
@@ -268,7 +273,7 @@ const searchFilings = defineTool({
 const sourceStatus = defineTool({
   name: 'source_status',
   title: 'Source status',
-  description: 'Health of the warehouse and the SEC connection, and what this role may do. Makes no SEC request.',
+  description: 'Health of the warehouse, the SEC connection and GitHub, and what this role may do. Contacts neither the SEC nor GitHub.',
   inputSchema: {},
   handler: async (_args, ctx) => {
     let warehouse: SourceStatus;
@@ -293,6 +298,12 @@ const sourceStatus = defineTool({
       : circuit === 'open'
         ? { name: 'sec_live', status: 'unavailable', detail: 'Paused after repeated SEC failures.' }
         : { name: 'sec_live', status: 'ok', detail: 'Based on recent requests. This call does not contact the SEC.' };
+    const githubCircuit = ctx.github.http.breaker.state();
+    const github: SourceStatus = !ctx.github.configured
+      ? { name: 'github', status: 'unavailable', detail: 'GITHUB_TOKEN or GITHUB_REPO is not set, so data issues can only be previewed.' }
+      : githubCircuit === 'open'
+        ? { name: 'github', status: 'unavailable', detail: 'Paused after repeated GitHub failures.' }
+        : { name: 'github', status: 'ok', detail: 'Based on recent requests. This call does not contact GitHub.' };
     return {
       data: {
         role: ctx.role.name,
@@ -303,8 +314,9 @@ const sourceStatus = defineTool({
           sec_requests_per_minute: ctx.role.sec_requests_per_minute,
           budget_remaining: ctx.sec.budget?.available() ?? null,
         },
+        github: { repo: ctx.github.repo, circuit: githubCircuit },
       },
-      sources: [warehouse, live],
+      sources: [warehouse, live, github],
     };
   },
 });
@@ -338,7 +350,9 @@ const getRawFacts = defineTool({
 const listDataIssues = defineTool({
   name: 'list_data_issues',
   title: 'List data issues',
-  description: 'Problems found in the SEC data while loading, such as conflicting filings, restatements, and gaps.',
+  description:
+    'Problems found in the SEC data while loading, such as conflicting filings, restatements, and gaps. ' +
+    'Each issue has a key that file_data_issue accepts.',
   inputSchema: {
     company: companyArg.optional(),
     metric: z.enum(METRIC_IDS).optional(),
@@ -349,7 +363,7 @@ const listDataIssues = defineTool({
     const company = args.company ? await findCompany(ctx.db, args.company) : null;
     const filters = [company?.cik ?? null, args.metric ?? null, args.kind ?? null];
     const where = `($1::text IS NULL OR d.cik = $1) AND ($2::text IS NULL OR d.metric = $2) AND ($3::text IS NULL OR d.kind = $3)`;
-    const issues = await ctx.db.query(
+    const issues = await ctx.db.query<Omit<DataIssueRow, 'cik' | 'name' | 'loaded_at'>>(
       `SELECT c.ticker, d.metric, d.kind, d.period_end, d.detail FROM data_issues d JOIN companies c USING (cik)
        WHERE ${where} ORDER BY c.ticker, d.metric, d.period_end NULLS LAST LIMIT $4`,
       [...filters, args.limit],
@@ -360,10 +374,51 @@ const listDataIssues = defineTool({
     );
     const [loaded] = await ctx.db.query<{ oldest: Date | null }>('SELECT min(loaded_at) AS oldest FROM companies');
     return {
-      data: { counts, issues },
+      data: { counts, issues: issues.map((issue) => ({ key: issueKey(issue), ...issue })) },
       sources: [{ name: 'warehouse', status: 'ok', as_of: loaded?.oldest?.toISOString() ?? null }],
     };
   },
 });
 
-export const TOOLS: Tool[] = [getCompany, getMetric, compareMetric, searchFilings, sourceStatus, getRawFacts, listDataIssues];
+const fileDataIssue = defineTool({
+  name: 'file_data_issue',
+  title: 'File data issue',
+  description:
+    'Turn a data issue into a GitHub issue with its evidence: the filings involved, the facts as filed, and what ' +
+    'the server publishes. Without confirm it only shows the draft. With confirm it files the issue once; ' +
+    'calling it again returns the existing issue.',
+  inputSchema: {
+    issue_key: z.string().min(5).max(200).describe('A key from list_data_issues.'),
+    confirm: z.boolean().default(false).describe('File the issue on GitHub. Leave false to see the draft first.'),
+  },
+  annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+  handler: async (args, ctx) => {
+    const issue = await findDataIssue(ctx.db, args.issue_key);
+    const { key, marker, ...draft } = await draftIssue(ctx.db, issue);
+    const warehouse: SourceStatus = { name: 'warehouse', status: 'ok', as_of: issue.loaded_at.toISOString() };
+    const repo = ctx.github.repo;
+
+    if (!args.confirm) {
+      const github: SourceStatus = ctx.github.configured
+        ? { name: 'github', status: 'ok', detail: 'Not contacted. Call again with confirm: true to file the issue.' }
+        : { name: 'github', status: 'unavailable', detail: 'GITHUB_TOKEN or GITHUB_REPO is not set, so the issue can only be previewed.' };
+      return { data: { status: 'draft', key, repo, issue: draft }, sources: [warehouse, github] };
+    }
+    try {
+      const existing = await ctx.github.findIssue(marker);
+      const filed = existing ?? (await ctx.github.createIssue(draft));
+      return {
+        data: { status: existing ? 'already_filed' : 'filed', key, repo, number: filed.number, url: filed.html_url, state: filed.state },
+        sources: [warehouse, { name: 'github', status: 'ok', as_of: new Date().toISOString() }],
+      };
+    } catch (error) {
+      if (!(error instanceof SourceError)) throw error;
+      return {
+        data: { status: 'not_filed', key, repo, issue: draft },
+        sources: [warehouse, { name: 'github', status: 'unavailable', detail: error.message }],
+      };
+    }
+  },
+});
+
+export const TOOLS: Tool[] = [getCompany, getMetric, compareMetric, searchFilings, sourceStatus, getRawFacts, listDataIssues, fileDataIssue];

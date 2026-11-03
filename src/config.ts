@@ -7,6 +7,8 @@ export const PROJECT_ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 export interface AppConfig {
   secUserAgent: string | undefined;
+  githubToken: string | undefined;
+  githubRepo: string | undefined;
   databaseUrl: string | undefined;
   dataDir: string;
   role: string;
@@ -20,6 +22,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   const fromRoot = (path: string) => join(PROJECT_ROOT, path);
   return {
     secUserAgent: env.SEC_USER_AGENT?.trim() || undefined,
+    githubToken: env.GITHUB_TOKEN?.trim() || undefined,
+    githubRepo: env.GITHUB_REPO?.trim() || undefined,
     databaseUrl: env.DATABASE_URL || undefined,
     dataDir: env.PGLITE_DATA_DIR ?? fromRoot('data/pglite'),
     role: env.MCP_ROLE ?? 'viewer',
