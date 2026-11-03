@@ -11,8 +11,8 @@
       "sec_requests_per_minute": 60
     },
     "data_engineer": {
-      "description": "Everything an analyst has, plus raw SEC facts and the data issues found during loading.",
-      "tools": ["get_company", "get_metric", "compare_metric", "search_filings", "source_status", "get_raw_facts", "list_data_issues"],
+      "description": "Everything an analyst has, plus raw SEC facts, the data issues found during loading, and filing them on GitHub.",
+      "tools": ["get_company", "get_metric", "compare_metric", "search_filings", "source_status", "get_raw_facts", "list_data_issues", "file_data_issue"],
       "sec_requests_per_minute": 120
     },
     "admin": {

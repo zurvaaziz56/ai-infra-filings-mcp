@@ -7,12 +7,13 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { loadRole } from '../src/access.js';
 import { AuditLog } from '../src/audit.js';
 import { PROJECT_ROOT } from '../src/config.js';
-import { type Db, migrate, openDb } from '../src/db.js';
+import type { Db } from '../src/db.js';
+import { GitHubClient } from '../src/github-client.js';
 import { loadCompanies } from '../src/load.js';
 import { SecClient } from '../src/sec-client.js';
 import { buildServer, invokeTool, type ServerDeps } from '../src/server.js';
 import { TOOLS } from '../src/tools.js';
-import { fakeClock, FIXTURE_TICKERS, fixtureFetch, json, TEST_USER_AGENT } from './helpers.js';
+import { fakeClock, fixtureFetch, fixtureWarehouse, json, TEST_USER_AGENT } from './helpers.js';
 
 let db: Db;
 let auditPath: string;
@@ -21,15 +22,18 @@ const healthySec = () => new SecClient({ userAgent: TEST_USER_AGENT, fetch: fixt
 const downSec = () => new SecClient({ userAgent: TEST_USER_AGENT, fetch: async () => json({}, 503), clock: fakeClock(), maxRetries: 0 });
 
 beforeAll(async () => {
-  db = await openDb({});
-  await migrate(db);
-  const results = await loadCompanies(db, healthySec(), FIXTURE_TICKERS);
-  expect(results.map((result) => result.status)).toEqual(FIXTURE_TICKERS.map(() => 'loaded'));
+  db = await fixtureWarehouse();
   auditPath = join(await mkdtemp(join(tmpdir(), 'ai-infra-audit-')), 'audit.jsonl');
 });
 
 function depsFor(roleName: string, sec = healthySec()): ServerDeps {
-  return { db, sec, role: loadRole(join(PROJECT_ROOT, 'config/roles.json'), roleName), audit: new AuditLog(auditPath) };
+  return {
+    db,
+    sec,
+    github: new GitHubClient({ token: undefined, repo: undefined }),
+    role: loadRole(join(PROJECT_ROOT, 'config/roles.json'), roleName),
+    audit: new AuditLog(auditPath),
+  };
 }
 
 async function connect(roleName: string, sec = healthySec()) {
@@ -54,7 +58,8 @@ describe('access control', () => {
   it('lists only the tools a role was given', async () => {
     const names = async (role: string) => (await (await connect(role)).client.listTools()).tools.map((tool) => tool.name).sort();
     expect(await names('viewer')).toEqual(['compare_metric', 'get_company', 'get_metric', 'source_status']);
-    expect(await names('data_engineer')).toEqual(expect.arrayContaining(['search_filings', 'get_raw_facts', 'list_data_issues']));
+    expect(await names('analyst')).not.toContain('file_data_issue');
+    expect(await names('data_engineer')).toEqual(expect.arrayContaining(['search_filings', 'get_raw_facts', 'list_data_issues', 'file_data_issue']));
   });
 
   it('refuses a tool outside the role, even when called directly', async () => {
@@ -137,7 +142,7 @@ describe('audit log', () => {
     const { call } = await connect('analyst');
     await call('get_company', { company: 'NVDA' });
     const { raw, entry } = await lastAuditEntry();
-    expect(entry).toMatchObject({ role: 'analyst', tool: 'get_company', outcome: 'ok', sec_requests: 1, args_sha256: expect.stringMatching(/^[0-9a-f]{64}$/) });
+    expect(entry).toMatchObject({ role: 'analyst', tool: 'get_company', outcome: 'ok', sec_requests: 1, github_requests: 0, args_sha256: expect.stringMatching(/^[0-9a-f]{64}$/) });
     expect(raw).not.toContain('NVDA');
   });
 });

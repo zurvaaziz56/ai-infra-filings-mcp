@@ -4,6 +4,7 @@ import { AuditLog } from './audit.js';
 import { loadConfig } from './config.js';
 import { openDb } from './db.js';
 import { SourceError } from './errors.js';
+import { GitHubClient } from './github-client.js';
 import { TokenBucket } from './resilience.js';
 import { SecClient } from './sec-client.js';
 import { buildServer } from './server.js';
@@ -15,7 +16,8 @@ try {
   const db = await openDb(config);
   const perMinute = role.sec_requests_per_minute;
   const sec = new SecClient({ userAgent: config.secUserAgent, budget: new TokenBucket(perMinute, perMinute / 60) });
-  const server = buildServer({ db, sec, role, audit: new AuditLog(config.auditLogPath) });
+  const github = new GitHubClient({ token: config.githubToken, repo: config.githubRepo });
+  const server = buildServer({ db, sec, github, role, audit: new AuditLog(config.auditLogPath) });
   await server.connect(new StdioServerTransport());
   console.error(`ai-infra-filings-mcp is running as role "${role.name}".`);
 } catch (error) {
