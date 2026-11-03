@@ -1,0 +1,34 @@
+{
+  "cik": "0001375365",
+  "name": "Super Micro Computer, Inc.",
+  "tickers": [
+    "SMCI",
+    "SMCIP"
+  ],
+  "sicDescription": "Electronic Computers",
+  "fiscalYearEnd": "0630",
+  "filings": {
+    "recent": {
+      "accessionNumber": [
+        "0001375365-26-000022",
+        "0001375365-26-000014"
+      ],
+      "filingDate": [
+        "2026-08-31",
+        "2026-05-11"
+      ],
+      "reportDate": [
+        "2026-06-30",
+        "2026-03-31"
+      ],
+      "form": [
+        "10-K",
+        "10-Q"
+      ],
+      "primaryDocument": [
+        "smci-20260630.htm",
+        "smci-20260331.htm"
+      ]
+    }
+  }
+}

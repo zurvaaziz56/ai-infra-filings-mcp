@@ -1,0 +1,40 @@
+{
+  "hits": {
+    "total": {
+      "value": 109,
+      "relation": "eq"
+    },
+    "hits": [
+      {
+        "_id": "0001018724-26-000026:amzn-20260630.htm",
+        "_source": {
+          "ciks": [
+            "0001018724"
+          ],
+          "display_names": [
+            "AMAZON COM INC  (AMZN)  (CIK 0001018724)"
+          ],
+          "form": "10-Q",
+          "file_date": "2026-07-31",
+          "period_ending": "2026-06-30",
+          "adsh": "0001018724-26-000026"
+        }
+      },
+      {
+        "_id": "0001018724-26-000014:amzn-20260331.htm",
+        "_source": {
+          "ciks": [
+            "0001018724"
+          ],
+          "display_names": [
+            "AMAZON COM INC  (AMZN)  (CIK 0001018724)"
+          ],
+          "form": "10-Q",
+          "file_date": "2026-04-30",
+          "period_ending": "2026-03-31",
+          "adsh": "0001018724-26-000014"
+        }
+      }
+    ]
+  }
+}
